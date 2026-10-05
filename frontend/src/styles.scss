@@ -1,0 +1,43 @@
+:root {
+  --pz-bg: #0b0f14;
+  --pz-surface: #121926;
+  --pz-surface-alt: #182131;
+  --pz-border: #243044;
+  --pz-text: #e8eef7;
+  --pz-muted: #8fa3bd;
+  --pz-primary: #2ee6a8;
+  --pz-primary-dark: #1bbd87;
+  --pz-danger: #ff5c7a;
+  --pz-warning: #ffb020;
+  --pz-radius: 14px;
+  --pz-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--pz-bg);
+  color: var(--pz-text);
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+a {
+  color: var(--pz-primary);
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
