@@ -1,0 +1,69 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: powerzone-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-powerzone}
+    ports:
+      - '${DB_PORT:-5432}:5432'
+    volumes:
+      - powerzone_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-powerzone}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ai:
+    build: ./ai-service
+    container_name: powerzone-ai
+    restart: unless-stopped
+    environment:
+      AI_SERVICE_API_KEY: ${AI_SERVICE_API_KEY:-internal-ai-key}
+    ports:
+      - '8000:8000'
+    healthcheck:
+      test: ['CMD', 'python', '-c', "import urllib.request;urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: powerzone-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      ai:
+        condition: service_started
+    environment:
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      DB_NAME: ${DB_NAME:-powerzone}
+      JWT_SECRET: ${JWT_SECRET:-powerzone-development-secret-change-me-32-bytes}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4200}
+      AI_SERVICE_URL: http://ai:8000
+      AI_SERVICE_API_KEY: ${AI_SERVICE_API_KEY:-internal-ai-key}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+    ports:
+      - '${API_PORT:-3000}:3000'
+
+  frontend:
+    build: ./frontend
+    container_name: powerzone-web
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - '${WEB_PORT:-4200}:80'
+
+volumes:
+  powerzone_db_data:
