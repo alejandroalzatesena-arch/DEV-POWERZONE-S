@@ -1,0 +1,32 @@
+.pz-auth-card {
+  display: grid;
+  gap: var(--pz-space-4);
+  width: min(26rem, 100%);
+  padding: var(--pz-space-6);
+  border: 1px solid var(--pz-border);
+  border-radius: var(--pz-radius-lg);
+  background: rgba(18, 25, 38, 0.82);
+  box-shadow: var(--pz-shadow);
+}
+
+.pz-auth-card h1 {
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+}
+
+.pz-auth-card > p:not(.pz-eyebrow, .pz-auth-card__alt) {
+  color: var(--pz-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.pz-auth-card button {
+  width: 100%;
+  margin-top: var(--pz-space-2);
+}
+
+.pz-auth-card__alt {
+  color: var(--pz-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
