@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  background: var(--pz-surface);
+  border: 1px solid var(--pz-border);
+  border-radius: var(--pz-radius);
+  box-shadow: var(--pz-shadow-soft);
+  overflow: hidden;
+}
+
+.pz-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--pz-space-3);
+  padding: var(--pz-space-4) var(--pz-space-5) 0;
+}
+
+.pz-card__header h3 {
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.pz-card__header p {
+  color: var(--pz-muted);
+  font-size: 0.82rem;
+  margin-top: 0.2rem;
+}
+
+.pz-card__body {
+  padding: var(--pz-space-4) var(--pz-space-5) var(--pz-space-5);
+}
+
+.pz-card__body:first-child {
+  padding-top: var(--pz-space-5);
+}

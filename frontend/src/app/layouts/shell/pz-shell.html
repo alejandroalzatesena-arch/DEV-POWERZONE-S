@@ -1,0 +1,52 @@
+<div class="pz-shell">
+  <aside class="pz-shell__sidebar">
+    <a class="pz-brand" routerLink="/app/dashboard" aria-label="PowerZone, ir al panel">
+      <span class="pz-brand__mark">PZ</span>
+      <span class="pz-brand__name">Power<span>Zone</span></span>
+    </a>
+
+    <nav class="pz-nav" aria-label="Navegacion principal">
+      @for (item of navItems; track item.path) {
+        <a
+          class="pz-nav__item"
+          [routerLink]="item.path"
+          routerLinkActive="is-active"
+          [routerLinkActiveOptions]="{ exact: item.exact }"
+        >
+          <span class="pz-nav__dot" aria-hidden="true"></span>
+          <span class="pz-nav__label">
+            {{ item.label }}
+            <small>{{ item.hint }}</small>
+          </span>
+        </a>
+      }
+    </nav>
+
+    <div class="pz-shell__footer">
+      <pz-badge tone="success">Sprint 0</pz-badge>
+      <p class="pz-muted">Foundation</p>
+    </div>
+  </aside>
+
+  <div class="pz-shell__main">
+    <header class="pz-topbar">
+      <div>
+        <p class="pz-eyebrow">Gimnasio PowerZone Centro</p>
+        <h2>Panel de control</h2>
+      </div>
+      <div class="pz-topbar__actions">
+        <span class="pz-user">
+          <span class="pz-user__avatar" aria-hidden="true">PZ</span>
+          <span class="pz-user__meta">
+            <strong>Sesion no iniciada</strong>
+            <small>Autenticacion en Sprint 1</small>
+          </span>
+        </span>
+      </div>
+    </header>
+
+    <main class="pz-shell__content">
+      <router-outlet />
+    </main>
+  </div>
+</div>
