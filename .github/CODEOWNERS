@@ -1,0 +1,13 @@
+# CODEOWNERS - PowerZone
+
+# Propietario por defecto: responsable de los merges finales.
+* @alejandroalzatesena-arch
+
+/backend/ @juanjoseguarumo25-sudo
+/frontend/ @hjuandiego562-web
+/ai-service/ @alejandroalzatesena-arch
+/.github/ @alejandroalzatesena-arch
+/docs/ @alejandroalzatesena-arch
+
+# Migraciones: requieren revision del responsable de datos.
+/backend/src/main/resources/db/migration/ @juanjoseguarumo25-sudo @alejandroalzatesena-arch
