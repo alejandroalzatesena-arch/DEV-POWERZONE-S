@@ -1,0 +1,57 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: var(--pz-radius-sm);
+  background: var(--pz-primary);
+  color: #06251b;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+:host(:hover) {
+  background: var(--pz-primary-dark);
+}
+
+:host(:active) {
+  transform: translateY(1px);
+}
+
+:host(:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+:host.pz-button--ghost {
+  background: transparent;
+  border-color: var(--pz-border);
+  color: var(--pz-text);
+}
+
+:host.pz-button--ghost:hover {
+  border-color: var(--pz-primary);
+  color: var(--pz-primary);
+}
+
+:host.pz-button--danger {
+  background: var(--pz-danger);
+  color: #2b0710;
+}
+
+:host.pz-button--danger:hover {
+  background: #ff7891;
+}
+
+:host.pz-button--sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}

@@ -1,0 +1,38 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  background: var(--pz-surface-alt);
+  border: 1px solid var(--pz-border);
+  color: var(--pz-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+:host.pz-badge--success {
+  background: var(--pz-primary-soft);
+  border-color: transparent;
+  color: var(--pz-primary);
+}
+
+:host.pz-badge--warning {
+  background: var(--pz-warning-soft);
+  border-color: transparent;
+  color: var(--pz-warning);
+}
+
+:host.pz-badge--danger {
+  background: var(--pz-danger-soft);
+  border-color: transparent;
+  color: var(--pz-danger);
+}
+
+:host.pz-badge--info {
+  background: var(--pz-info-soft);
+  border-color: transparent;
+  color: var(--pz-info);
+}
