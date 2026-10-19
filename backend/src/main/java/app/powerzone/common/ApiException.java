@@ -47,4 +47,8 @@ public class ApiException extends RuntimeException {
     public static ApiException unprocessable(String code, String message) {
         return new ApiException(HttpStatus.UNPROCESSABLE_ENTITY, code, message);
     }
+
+    public static ApiException tooManyRequests(String code, String message) {
+        return new ApiException(HttpStatus.TOO_MANY_REQUESTS, code, message);
+    }
 }

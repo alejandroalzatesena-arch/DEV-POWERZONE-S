@@ -41,6 +41,9 @@ springdoc:
 powerzone:
   api-version: v1
   cors-origins: ${CORS_ORIGINS:http://localhost:4200}
+  web-url: ${WEB_URL:http://localhost:4200}
+  cookies:
+    secure: ${COOKIE_SECURE:false}
   throttle:
     limit: ${THROTTLE_LIMIT:120}
     window-seconds: ${THROTTLE_WINDOW_SECONDS:60}
