@@ -9,6 +9,7 @@ import app.powerzone.users.UserAccount;
 import app.powerzone.users.UserRepository;
 import app.powerzone.users.UserResponse;
 import java.util.Locale;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     static final String DEFAULT_ROLE = "MEMBER";
+    static final int MAX_ACTIVE_SESSIONS = 5;
 
     private final UserRepository userRepository;
     private final GymRepository gymRepository;
@@ -25,6 +27,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final LoginAttemptService loginAttemptService;
+    private final long rememberMeSeconds;
 
     public AuthService(UserRepository userRepository,
                        GymRepository gymRepository,
@@ -32,7 +35,8 @@ public class AuthService {
                        MailService mailService,
                        JwtService jwtService,
                        RefreshTokenService refreshTokenService,
-                       LoginAttemptService loginAttemptService) {
+                       LoginAttemptService loginAttemptService,
+                       @Value("${powerzone.jwt.remember-me-seconds:2592000}") long rememberMeSeconds) {
         this.userRepository = userRepository;
         this.gymRepository = gymRepository;
         this.passwordEncoder = passwordEncoder;
@@ -40,6 +44,7 @@ public class AuthService {
         this.jwtService = jwtService;
         this.refreshTokenService = refreshTokenService;
         this.loginAttemptService = loginAttemptService;
+        this.rememberMeSeconds = rememberMeSeconds;
     }
 
     @Transactional
@@ -93,7 +98,7 @@ public class AuthService {
         }
 
         loginAttemptService.clear(email);
-        return createSession(user);
+        return createSession(user, request.rememberMe());
     }
 
     public SessionResult refresh(String rawRefreshToken) {
@@ -119,9 +124,12 @@ public class AuthService {
         }
     }
 
-    private SessionResult createSession(UserAccount user) {
+    private SessionResult createSession(UserAccount user, boolean rememberMe) {
         JwtService.IssuedToken access = jwtService.issue(user);
-        RefreshTokenService.IssuedRefreshToken refresh = refreshTokenService.issue(user.id());
+        long ttlSeconds = rememberMe ? rememberMeSeconds : refreshTokenService.refreshSeconds();
+        RefreshTokenService.IssuedRefreshToken refresh =
+                refreshTokenService.issue(user.id(), java.time.Duration.ofSeconds(ttlSeconds));
+        refreshTokenService.limitActiveSessions(user.id(), MAX_ACTIVE_SESSIONS);
         return new SessionResult(
                 access.value(),
                 access.expiresInSeconds(),

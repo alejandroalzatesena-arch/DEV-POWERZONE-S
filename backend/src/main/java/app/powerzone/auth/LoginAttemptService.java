@@ -49,6 +49,17 @@ public class LoginAttemptService {
         failures.remove(key(email));
     }
 
+    /** Descarta las ventanas sin intentos recientes para liberar memoria. */
+    public void purgeExpired() {
+        failures.entrySet().removeIf(entry -> {
+            Deque<Instant> attempts = entry.getValue();
+            synchronized (attempts) {
+                prune(attempts);
+                return attempts.isEmpty();
+            }
+        });
+    }
+
     private void prune(Deque<Instant> attempts) {
         Instant limit = Instant.now().minus(WINDOW);
         while (!attempts.isEmpty() && attempts.peekFirst().isBefore(limit)) {

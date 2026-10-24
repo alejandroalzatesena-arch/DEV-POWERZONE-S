@@ -66,6 +66,13 @@ public class RefreshTokenService {
         repository.revokeAllForUser(userId);
     }
 
+    /** Conserva solo las sesiones mas recientes del usuario. */
+    public void limitActiveSessions(long userId, int maxSessions) {
+        if (repository.activeSessions(userId) > maxSessions) {
+            repository.keepMostRecent(userId, maxSessions);
+        }
+    }
+
     public long refreshSeconds() {
         return refreshSeconds;
     }
