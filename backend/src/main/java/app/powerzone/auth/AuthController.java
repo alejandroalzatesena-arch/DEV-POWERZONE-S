@@ -1,8 +1,10 @@
 package app.powerzone.auth;
 
 import app.powerzone.auth.dto.AuthResponse;
+import app.powerzone.auth.dto.ForgotPasswordRequest;
 import app.powerzone.auth.dto.LoginRequest;
 import app.powerzone.auth.dto.RegisterRequest;
+import app.powerzone.auth.dto.ResetPasswordRequest;
 import app.powerzone.common.ApiException;
 import app.powerzone.users.UserResponse;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,11 +28,14 @@ public class AuthController {
     static final String REFRESH_COOKIE = "pz_refresh";
 
     private final AuthService authService;
+    private final PasswordResetService passwordResetService;
     private final boolean secureCookies;
 
     public AuthController(AuthService authService,
+                          PasswordResetService passwordResetService,
                           @Value("${powerzone.cookies.secure:false}") boolean secureCookies) {
         this.authService = authService;
+        this.passwordResetService = passwordResetService;
         this.secureCookies = secureCookies;
     }
 
@@ -71,6 +76,20 @@ public class AuthController {
             @CookieValue(name = REFRESH_COOKIE, required = false) String refreshToken,
             HttpServletResponse response) {
         authService.logout(refreshToken);
+        response.addHeader(HttpHeaders.SET_COOKIE, expiredCookie().toString());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        passwordResetService.request(request.email());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@Valid @RequestBody ResetPasswordRequest request,
+                                              HttpServletResponse response) {
+        passwordResetService.reset(request.token(), request.newPassword());
         response.addHeader(HttpHeaders.SET_COOKIE, expiredCookie().toString());
         return ResponseEntity.noContent().build();
     }
