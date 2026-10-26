@@ -26,6 +26,22 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/auth/register/pz-register').then((m) => m.PzRegister),
       },
+      {
+        path: 'forgot-password',
+        title: 'Recuperar contrasena | PowerZone',
+        loadComponent: () =>
+          import('./pages/auth/forgot-password/pz-forgot-password').then(
+            (m) => m.PzForgotPassword,
+          ),
+      },
+      {
+        path: 'reset-password',
+        title: 'Nueva contrasena | PowerZone',
+        loadComponent: () =>
+          import('./pages/auth/reset-password/pz-reset-password').then(
+            (m) => m.PzResetPassword,
+          ),
+      },
       { path: '', pathMatch: 'full', redirectTo: 'login' },
     ],
   },
