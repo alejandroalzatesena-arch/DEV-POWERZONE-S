@@ -148,6 +148,30 @@
   background: var(--pz-surface);
 }
 
+.pz-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pz-logout {
+  border: 1px solid var(--pz-border);
+  border-radius: var(--pz-radius-sm);
+  background: transparent;
+  color: var(--pz-muted);
+  padding: 0.45rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.pz-logout:hover {
+  border-color: var(--pz-danger);
+  color: var(--pz-danger);
+}
+
 .pz-user__avatar {
   display: grid;
   place-items: center;
