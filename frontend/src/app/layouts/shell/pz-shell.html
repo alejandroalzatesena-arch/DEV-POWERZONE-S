@@ -23,8 +23,8 @@
     </nav>
 
     <div class="pz-shell__footer">
-      <pz-badge tone="success">Sprint 0</pz-badge>
-      <p class="pz-muted">Foundation</p>
+      <pz-badge tone="success">Sprint 1</pz-badge>
+      <p class="pz-muted">Auth &amp; users</p>
     </div>
   </aside>
 
@@ -36,12 +36,13 @@
       </div>
       <div class="pz-topbar__actions">
         <span class="pz-user">
-          <span class="pz-user__avatar" aria-hidden="true">PZ</span>
+          <span class="pz-user__avatar" aria-hidden="true">{{ initials() }}</span>
           <span class="pz-user__meta">
-            <strong>Sesion no iniciada</strong>
-            <small>Autenticacion en Sprint 1</small>
+            <strong>{{ displayName() || 'Sesion activa' }}</strong>
+            <small>{{ roleLabel() }}</small>
           </span>
         </span>
+        <button type="button" class="pz-logout" (click)="logout()">Salir</button>
       </div>
     </header>
 

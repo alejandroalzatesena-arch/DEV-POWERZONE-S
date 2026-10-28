@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard, guestGuard } from './core/auth/auth.guard';
 
 /**
  * Rutas de la aplicacion. Las vistas de cada dominio se cargan de forma
@@ -18,11 +19,13 @@ export const routes: Routes = [
       {
         path: 'login',
         title: 'Iniciar sesion | PowerZone',
+        canActivate: [guestGuard],
         loadComponent: () => import('./pages/auth/login/pz-login').then((m) => m.PzLogin),
       },
       {
         path: 'register',
         title: 'Crear cuenta | PowerZone',
+        canActivate: [guestGuard],
         loadComponent: () =>
           import('./pages/auth/register/pz-register').then((m) => m.PzRegister),
       },
@@ -47,6 +50,7 @@ export const routes: Routes = [
   },
   {
     path: 'app',
+    canActivate: [authGuard],
     loadComponent: () => import('./layouts/shell/pz-shell').then((m) => m.PzShell),
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
