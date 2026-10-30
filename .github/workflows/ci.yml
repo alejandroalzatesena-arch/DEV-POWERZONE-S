@@ -64,6 +64,9 @@ jobs:
       - name: Compilar en modo produccion
         run: npm run build
 
+      - name: Ejecutar pruebas unitarias
+        run: npm test -- --watch=false
+
       - name: Publicar bundle
         uses: actions/upload-artifact@v4
         with:
