@@ -1,5 +1,8 @@
 package app.powerzone.common;
 
+import java.util.Arrays;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -9,29 +12,33 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.Arrays;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
- * Configuracion base de seguridad. En el Sprint 1 se agrega la cadena JWT y
- * las reglas de autorizacion por rol.
+ * Seguridad de la API: cadena stateless con JWT HS256, reglas de acceso por
+ * ruta y autorizacion por rol en los controladores.
  */
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
     private final RateLimitFilter rateLimitFilter;
+    private final SecurityErrorWriter securityErrorWriter;
+    private final JwtAuthenticationConverter jwtAuthenticationConverter;
     private final String allowedOrigins;
 
     public SecurityConfig(RateLimitFilter rateLimitFilter,
+                          SecurityErrorWriter securityErrorWriter,
+                          JwtAuthenticationConverter jwtAuthenticationConverter,
                           @Value("${powerzone.cors-origins:http://localhost:4200}") String allowedOrigins) {
         this.rateLimitFilter = rateLimitFilter;
+        this.securityErrorWriter = securityErrorWriter;
+        this.jwtAuthenticationConverter = jwtAuthenticationConverter;
         this.allowedOrigins = allowedOrigins;
     }
 
@@ -54,7 +61,23 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/v1/health", "/actuator/**", "/api/docs/**", "/api/docs-json/**").permitAll()
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/auth/register",
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/refresh",
+                                "/api/v1/auth/logout",
+                                "/api/v1/auth/forgot-password",
+                                "/api/v1/auth/reset-password").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/v1/trainer/**").hasAnyRole("ADMIN", "TRAINER")
+                        .anyRequest().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))
+                        .authenticationEntryPoint(securityErrorWriter)
+                        .accessDeniedHandler(securityErrorWriter))
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint(securityErrorWriter)
+                        .accessDeniedHandler(securityErrorWriter))
                 .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
