@@ -18,10 +18,10 @@ import { PzEmptyState } from '../../shared/ui/empty-state/pz-empty-state';
         </div>
       </header>
 
-      <pz-card title="Directorio" subtitle="Gestion de usuarios en el Sprint 1">
+      <pz-card title="Directorio" subtitle="Miembros del gimnasio">
         <pz-empty-state
           heading="Sin miembros registrados"
-          description="El registro de usuarios y la administracion de perfiles llegan con el Sprint 1."
+          description="Cuando las personas se registren en el gimnasio apareceran aqui con su perfil y ultima actividad."
           mark="M"
         />
       </pz-card>

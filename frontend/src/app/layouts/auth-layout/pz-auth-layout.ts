@@ -9,8 +9,13 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     <div class="pz-auth">
       <section class="pz-auth__panel">
         <a class="pz-brand" routerLink="/">
-          <span class="pz-brand__mark">PZ</span>
-          <span class="pz-brand__name">Power<span>Zone</span></span>
+          <img
+            class="pz-brand__logo"
+            src="brand/powerzone-logo.webp"
+            alt="PowerZone"
+            width="720"
+            height="657"
+          />
         </a>
 
         <div class="pz-auth__pitch">

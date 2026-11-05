@@ -14,9 +14,9 @@
 }
 
 :host.pz-badge--success {
-  background: var(--pz-primary-soft);
+  background: var(--pz-success-soft);
   border-color: transparent;
-  color: var(--pz-primary);
+  color: var(--pz-success);
 }
 
 :host.pz-badge--warning {

@@ -1,0 +1,160 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Tu cuenta</p>
+      <h1>Ajustes</h1>
+      <p>
+        Administra tus datos personales y tu perfil de entrenamiento. Esta informacion es la
+        base con la que generamos tus rutinas.
+      </p>
+    </div>
+    <pz-badge tone="info">{{ roleLabel() }}</pz-badge>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate class="pz-settings__form">
+    <section class="pz-settings__columns">
+      <pz-card title="Datos personales" subtitle="Como te identificamos">
+        <div class="pz-settings__fields">
+          <div class="pz-form-grid">
+            <label class="pz-field">
+              <span>Nombre</span>
+              <input type="text" formControlName="firstName" autocomplete="given-name" />
+              @if (invalid('firstName')) {
+                <small class="pz-field__error">El nombre es obligatorio.</small>
+              }
+            </label>
+            <label class="pz-field">
+              <span>Apellido</span>
+              <input type="text" formControlName="lastName" autocomplete="family-name" />
+              @if (invalid('lastName')) {
+                <small class="pz-field__error">El apellido es obligatorio.</small>
+              }
+            </label>
+          </div>
+
+          <div class="pz-form-grid">
+            <label class="pz-field">
+              <span>Telefono</span>
+              <input type="tel" formControlName="phone" autocomplete="tel" />
+              @if (invalid('phone')) {
+                <small class="pz-field__error">Maximo 30 caracteres.</small>
+              }
+            </label>
+            <label class="pz-field">
+              <span>Fecha de nacimiento</span>
+              <input type="date" formControlName="birthDate" />
+            </label>
+          </div>
+
+          <div class="pz-form-grid">
+            <label class="pz-field">
+              <span>Estatura (cm)</span>
+              <input type="number" formControlName="heightCm" min="50" max="250" />
+              @if (invalid('heightCm')) {
+                <small class="pz-field__error">Entre 50 y 250 cm.</small>
+              }
+            </label>
+            <label class="pz-field">
+              <span>Peso (kg)</span>
+              <input type="number" formControlName="weightKg" min="20" max="300" step="0.1" />
+              @if (invalid('weightKg')) {
+                <small class="pz-field__error">Entre 20 y 300 kg.</small>
+              }
+            </label>
+          </div>
+        </div>
+      </pz-card>
+
+      <pz-card title="Perfil de entrenamiento" subtitle="Base para generar tus rutinas">
+        <div class="pz-settings__fields">
+          <label class="pz-field">
+            <span>Objetivo</span>
+            <select formControlName="goal">
+              <option value="">Selecciona un objetivo</option>
+              @for (option of goalOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="pz-field">
+            <span>Experiencia</span>
+            <select formControlName="experienceLevel">
+              <option value="">Selecciona tu nivel</option>
+              @for (option of levelOptions; track option.value) {
+                <option [value]="option.value">{{ option.label }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="pz-field">
+            <span>Dias de entrenamiento por semana</span>
+            <input type="number" formControlName="daysPerWeek" min="2" max="7" />
+            @if (invalid('daysPerWeek')) {
+              <small class="pz-field__error">Entre 2 y 7 dias.</small>
+            }
+            <small class="pz-field__hint">
+              Con estos datos generamos tu plan semanal desde la seccion Rutinas.
+            </small>
+          </label>
+        </div>
+      </pz-card>
+    </section>
+
+    <div class="pz-settings__actions">
+      <p class="pz-muted">Tu email y tu rol no se pueden cambiar desde aqui.</p>
+      <div class="pz-settings__buttons">
+        <button
+          pz-button
+          type="button"
+          variant="ghost"
+          (click)="discard()"
+          [disabled]="saving() || form.pristine"
+        >
+          Descartar
+        </button>
+        <button pz-button type="submit" [disabled]="saving()">
+          {{ saving() ? 'Guardando...' : 'Guardar cambios' }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <section class="pz-settings__columns">
+    <pz-card title="Cuenta" subtitle="Acceso y seguridad">
+      <dl class="pz-settings__list">
+        <div>
+          <dt>Email</dt>
+          <dd>{{ user()?.email }}</dd>
+        </div>
+        <div>
+          <dt>Rol</dt>
+          <dd>{{ roleLabel() }}</dd>
+        </div>
+        <div>
+          <dt>Estado</dt>
+          <dd><pz-badge tone="success">Activa</pz-badge></dd>
+        </div>
+      </dl>
+    </pz-card>
+
+    <pz-card title="Contrasena" subtitle="Cambio seguro">
+      <p class="pz-muted pz-settings__hint">
+        Te enviaremos un enlace a tu email para que definas una nueva contrasena.
+      </p>
+      <button
+        pz-button
+        type="button"
+        variant="ghost"
+        (click)="sendPasswordReset()"
+        [disabled]="sendingReset()"
+      >
+        {{ sendingReset() ? 'Enviando...' : 'Enviar enlace de cambio' }}
+      </button>
+    </pz-card>
+  </section>
+</div>
