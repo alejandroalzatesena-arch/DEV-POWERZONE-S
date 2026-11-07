@@ -232,6 +232,17 @@ public class RoutineRepository {
         return count != null && count > 0;
     }
 
+    /** Comprueba que el ejercicio prescrito pertenece a la rutina indicada. */
+    public boolean belongsToRoutine(long routineExerciseId, long routineId) {
+        Integer count = jdbc.queryForObject("""
+                SELECT COUNT(*)
+                  FROM routine_exercises e
+                  JOIN routine_days d ON d.id = e.routine_day_id
+                 WHERE e.id = ? AND d.routine_id = ?
+                """, Integer.class, routineExerciseId, routineId);
+        return count != null && count > 0;
+    }
+
     /** Reemplaza la prescripcion de un ejercicio (entrenador o administrador). */
     public void updatePrescription(long routineExerciseId,
                                    int sets,
