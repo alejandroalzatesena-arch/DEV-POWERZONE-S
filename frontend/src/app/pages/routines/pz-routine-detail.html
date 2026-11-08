@@ -1,0 +1,86 @@
+<div class="pz-page">
+  <a class="pz-back" routerLink="/app/routines">&larr; Volver a rutinas</a>
+
+  @if (loading()) {
+    <p class="pz-muted">Cargando rutina...</p>
+  } @else if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  } @else if (detail(); as routine) {
+    <header class="pz-page__header">
+      <div>
+        <p class="pz-eyebrow">Plan semanal</p>
+        <h1>{{ routine.name }}</h1>
+        <div class="pz-detail__meta">
+          <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
+          <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
+          <pz-badge tone="success">{{ routine.daysPerWeek }} dias</pz-badge>
+          @if (routine.status === 'ARCHIVED') {
+            <pz-badge tone="warning">Archivada</pz-badge>
+          }
+        </div>
+      </div>
+    </header>
+
+    <nav class="pz-day-tabs" aria-label="Dias de la rutina">
+      @for (day of routine.days; track day.id) {
+        <button
+          type="button"
+          class="pz-day-tabs__item"
+          [class.is-active]="day.dayNumber === selectedDay()"
+          [attr.aria-pressed]="day.dayNumber === selectedDay()"
+          (click)="selectDay(day.dayNumber)"
+        >
+          <span>Dia {{ day.dayNumber }}</span>
+          <strong>{{ day.name }}</strong>
+        </button>
+      }
+    </nav>
+
+    @if (activeDay(); as day) {
+      <pz-card [title]="'Dia ' + day.dayNumber + ' - ' + day.name" [subtitle]="day.focus">
+        @if (day.exercises.length === 0) {
+          <pz-empty-state
+            heading="Sin ejercicios"
+            description="Este dia no tiene ejercicios prescritos."
+            mark="E"
+          />
+        } @else {
+          <div class="pz-table-wrap">
+            <table class="pz-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Ejercicio</th>
+                  <th>Series x reps</th>
+                  <th>Descanso</th>
+                  <th>Notas</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (exercise of day.exercises; track exercise.id) {
+                  <tr>
+                    <td class="pz-mono">{{ exercise.position }}</td>
+                    <td>
+                      <strong>{{ exercise.name }}</strong>
+                      <small class="pz-detail__sub">
+                        {{ muscleLabel(exercise.muscleGroup) }} ·
+                        {{ equipmentLabel(exercise.equipment) }}
+                      </small>
+                    </td>
+                    <td class="pz-mono">{{ exercise.sets }} x {{ exercise.reps }}</td>
+                    <td class="pz-mono">{{ exercise.restSeconds }} s</td>
+                    <td class="pz-detail__notes">{{ exercise.notes || '—' }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </pz-card>
+    }
+
+    <p class="pz-muted pz-detail__footer">
+      Registra tu progreso desde la vista diaria para mantener el historial de cargas.
+    </p>
+  }
+</div>
