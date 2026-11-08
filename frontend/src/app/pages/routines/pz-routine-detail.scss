@@ -1,0 +1,89 @@
+.pz-back {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--pz-muted);
+}
+
+.pz-back:hover {
+  color: var(--pz-primary);
+}
+
+.pz-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--pz-space-2);
+}
+
+.pz-day-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pz-space-2);
+}
+
+.pz-day-tabs__item {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 7.5rem;
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  border: 1px solid var(--pz-border);
+  border-radius: var(--pz-radius-sm);
+  background: var(--pz-surface);
+  color: var(--pz-muted);
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease,
+    background 0.15s ease;
+}
+
+.pz-day-tabs__item span {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pz-day-tabs__item strong {
+  font-size: 0.82rem;
+  color: var(--pz-text);
+}
+
+.pz-day-tabs__item:hover {
+  border-color: var(--pz-primary);
+}
+
+.pz-day-tabs__item.is-active {
+  border-color: var(--pz-primary);
+  background: var(--pz-primary-soft);
+  color: var(--pz-primary);
+}
+
+.pz-table-wrap {
+  overflow-x: auto;
+}
+
+.pz-detail__sub {
+  display: block;
+  color: var(--pz-muted);
+  font-size: 0.74rem;
+  margin-top: 0.15rem;
+}
+
+.pz-detail__notes {
+  color: var(--pz-muted);
+  font-size: 0.8rem;
+  max-width: 24ch;
+}
+
+.pz-detail__footer {
+  font-size: 0.8rem;
+}
+
+.pz-alert {
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--pz-radius-sm);
+  border: 1px solid rgba(255, 92, 122, 0.42);
+  background: var(--pz-danger-soft);
+  color: #ffb3c1;
+  font-size: 0.82rem;
+}

@@ -1,0 +1,107 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Entrenamiento</p>
+      <h1>Rutinas</h1>
+      <p>
+        Genera tu plan semanal segun objetivo, experiencia y dias disponibles. Cada rutina
+        queda guardada con su prescripcion de series, repeticiones y descanso.
+      </p>
+    </div>
+    <button pz-button type="button" (click)="generate()" [disabled]="generating()">
+      {{ generating() ? 'Generando...' : 'Generar rutina' }}
+    </button>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <section class="pz-routines">
+    <pz-card title="Perfil de entrenamiento" subtitle="Base para la generacion">
+      <form [formGroup]="form" class="pz-routines__form" (ngSubmit)="generate()" novalidate>
+        <label class="pz-field">
+          <span>Objetivo</span>
+          <select formControlName="goal" [attr.aria-invalid]="invalid('goal')">
+            <option value="">Selecciona un objetivo</option>
+            @for (option of goalOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          @if (invalid('goal')) {
+            <small class="pz-field__error">El objetivo es obligatorio.</small>
+          }
+        </label>
+
+        <label class="pz-field">
+          <span>Experiencia</span>
+          <select formControlName="experienceLevel" [attr.aria-invalid]="invalid('experienceLevel')">
+            <option value="">Selecciona tu nivel</option>
+            @for (option of levelOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+          @if (invalid('experienceLevel')) {
+            <small class="pz-field__error">El nivel de experiencia es obligatorio.</small>
+          }
+        </label>
+
+        <label class="pz-field">
+          <span>Dias por semana</span>
+          <input
+            type="number"
+            formControlName="daysPerWeek"
+            min="2"
+            max="7"
+            [attr.aria-invalid]="invalid('daysPerWeek')"
+          />
+          @if (invalid('daysPerWeek')) {
+            <small class="pz-field__error">Elige entre 2 y 7 dias.</small>
+          }
+        </label>
+
+        <button pz-button type="submit" [disabled]="generating()">
+          {{ generating() ? 'Generando...' : 'Guardar y generar' }}
+        </button>
+      </form>
+
+      <p class="pz-muted pz-routines__hint">
+        Al generar actualizamos tu perfil con estos valores para que el motor calcule el split
+        semanal y la prescripcion adecuada.
+      </p>
+    </pz-card>
+
+    <pz-card title="Tus rutinas" [subtitle]="routinesList().length + ' guardadas'">
+      @if (loading()) {
+        <p class="pz-muted">Cargando rutinas...</p>
+      } @else if (routinesList().length === 0) {
+        <pz-empty-state
+          heading="Aun no tienes rutinas"
+          description="Completa tu perfil y pulsa Generar rutina para crear tu primer plan semanal."
+          mark="R"
+        />
+      } @else {
+        <ul class="pz-routine-list">
+          @for (routine of routinesList(); track routine.id) {
+            <li class="pz-routine-list__item">
+              <div class="pz-routine-list__main">
+                <strong>{{ routine.name }}</strong>
+                <div class="pz-routine-list__meta">
+                  <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
+                  <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
+                  <pz-badge tone="success">{{ routine.daysPerWeek }} dias</pz-badge>
+                  @if (routine.status === 'ARCHIVED') {
+                    <pz-badge tone="warning">Archivada</pz-badge>
+                  }
+                </div>
+              </div>
+              <a class="pz-routine-list__link" [routerLink]="['/app/routines', routine.id]">
+                Ver plan
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </pz-card>
+  </section>
+</div>

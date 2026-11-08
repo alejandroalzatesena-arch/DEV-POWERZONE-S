@@ -1,0 +1,112 @@
+.pz-routines {
+  display: grid;
+  gap: var(--pz-space-4);
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  align-items: start;
+}
+
+.pz-routines__form {
+  display: grid;
+  gap: var(--pz-space-3);
+}
+
+.pz-routines__hint {
+  margin-top: var(--pz-space-3);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.pz-field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.pz-field > span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--pz-muted);
+}
+
+.pz-field input,
+.pz-field select {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--pz-radius-sm);
+  border: 1px solid var(--pz-border);
+  background: var(--pz-surface-alt);
+  color: var(--pz-text);
+  font-size: 0.9rem;
+}
+
+.pz-field input:focus,
+.pz-field select:focus {
+  border-color: var(--pz-primary);
+  outline: none;
+}
+
+.pz-field input[aria-invalid='true'],
+.pz-field select[aria-invalid='true'] {
+  border-color: var(--pz-danger);
+}
+
+.pz-field__error {
+  color: var(--pz-danger);
+  font-size: 0.72rem;
+}
+
+.pz-alert {
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--pz-radius-sm);
+  border: 1px solid rgba(255, 92, 122, 0.42);
+  background: var(--pz-danger-soft);
+  color: #ffb3c1;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.pz-routine-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--pz-space-2);
+}
+
+.pz-routine-list__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pz-space-3);
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--pz-border);
+  border-radius: var(--pz-radius-sm);
+  background: var(--pz-surface-alt);
+}
+
+.pz-routine-list__main {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.pz-routine-list__main strong {
+  font-size: 0.95rem;
+}
+
+.pz-routine-list__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pz-routine-list__link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 860px) {
+  .pz-routines {
+    grid-template-columns: 1fr;
+  }
+}
