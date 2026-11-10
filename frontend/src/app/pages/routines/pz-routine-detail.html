@@ -14,11 +14,13 @@
           <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
           <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
           <pz-badge tone="success">{{ routine.daysPerWeek }} dias</pz-badge>
+          <pz-badge>{{ weekVolume() }} ejercicios / semana</pz-badge>
           @if (routine.status === 'ARCHIVED') {
             <pz-badge tone="warning">Archivada</pz-badge>
           }
         </div>
       </div>
+      <a class="pz-detail__link" routerLink="/app/progress">Ver progreso</a>
     </header>
 
     <nav class="pz-day-tabs" aria-label="Dias de la rutina">
@@ -54,11 +56,12 @@
                   <th>Series x reps</th>
                   <th>Descanso</th>
                   <th>Notas</th>
+                  <th><span class="pz-sr-only">Acciones</span></th>
                 </tr>
               </thead>
               <tbody>
                 @for (exercise of day.exercises; track exercise.id) {
-                  <tr>
+                  <tr [class.is-selected]="loggingExercise()?.id === exercise.id">
                     <td class="pz-mono">{{ exercise.position }}</td>
                     <td>
                       <strong>{{ exercise.name }}</strong>
@@ -70,6 +73,17 @@
                     <td class="pz-mono">{{ exercise.sets }} x {{ exercise.reps }}</td>
                     <td class="pz-mono">{{ exercise.restSeconds }} s</td>
                     <td class="pz-detail__notes">{{ exercise.notes || '—' }}</td>
+                    <td>
+                      <button
+                        pz-button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        (click)="openProgress(exercise)"
+                      >
+                        Registrar
+                      </button>
+                    </td>
                   </tr>
                 }
               </tbody>
@@ -79,8 +93,62 @@
       </pz-card>
     }
 
-    <p class="pz-muted pz-detail__footer">
-      Registra tu progreso desde la vista diaria para mantener el historial de cargas.
-    </p>
+    @if (loggingExercise(); as exercise) {
+      <pz-card
+        [title]="'Registrar progreso - ' + exercise.name"
+        subtitle="Peso, repeticiones y series de la sesion"
+      >
+        <form [formGroup]="progressForm" class="pz-progress-form" (ngSubmit)="saveProgress()">
+          <label class="pz-field">
+            <span>Fecha</span>
+            <input type="date" formControlName="performedOn" />
+          </label>
+
+          <label class="pz-field">
+            <span>Peso (kg)</span>
+            <input type="number" formControlName="weightKg" min="0" max="500" step="0.5" />
+          </label>
+
+          <label class="pz-field">
+            <span>Repeticiones</span>
+            <input type="number" formControlName="reps" min="1" max="100" />
+          </label>
+
+          <label class="pz-field">
+            <span>Series</span>
+            <input type="number" formControlName="sets" min="1" max="10" />
+          </label>
+
+          <label class="pz-field pz-progress-form__wide">
+            <span>Notas</span>
+            <input type="text" formControlName="notes" maxlength="200" placeholder="Sensaciones, tecnica, incidencias" />
+          </label>
+
+          @if (progressError()) {
+            <p class="pz-alert pz-progress-form__wide" role="alert">{{ progressError() }}</p>
+          }
+
+          <div class="pz-progress-form__actions">
+            <button pz-button type="button" variant="ghost" (click)="closeProgress()">
+              Cancelar
+            </button>
+            <button pz-button type="submit" [disabled]="savingProgress()">
+              {{ savingProgress() ? 'Guardando...' : 'Guardar registro' }}
+            </button>
+          </div>
+        </form>
+
+        @if (exerciseSummary(); as summary) {
+          <p class="pz-detail__summary">
+            Historial: {{ summary.sessions }} sesiones ·
+            mejor carga {{ summary.maxWeightKg ?? '—' }} kg ·
+            ultima {{ summary.lastWeightKg ?? '—' }} kg
+            ({{ summary.lastPerformedOn }})
+          </p>
+        } @else {
+          <p class="pz-muted pz-detail__summary">Sin registros previos para este ejercicio.</p>
+        }
+      </pz-card>
+    }
   }
 </div>

@@ -45,6 +45,7 @@ export class PzShell {
   protected readonly navItems: NavItem[] = [
     { label: 'Panel', path: '/app/dashboard', exact: true, hint: 'Resumen general' },
     { label: 'Rutinas', path: '/app/routines', exact: false, hint: 'Generacion y seguimiento' },
+    { label: 'Progreso', path: '/app/progress', exact: false, hint: 'Cargas y evolucion' },
     { label: 'Miembros', path: '/app/members', exact: false, hint: 'Directorio del gimnasio' },
     { label: 'Ajustes', path: '/app/settings', exact: false, hint: 'Preferencias y API' },
   ];
