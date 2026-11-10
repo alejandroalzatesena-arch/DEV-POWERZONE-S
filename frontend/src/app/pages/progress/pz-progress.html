@@ -1,0 +1,133 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Seguimiento</p>
+      <h1>Progreso</h1>
+      <p>
+        Historial de cargas por ejercicio y resumen de evolucion. Cada registro queda
+        asociado a tu cuenta y a la rutina que lo origino.
+      </p>
+    </div>
+    <a class="pz-detail__link" routerLink="/app/routines">Ir a rutinas</a>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <section class="pz-grid">
+    <pz-card title="Ejercicios" subtitle="Con registros">
+      <p class="pz-stat">{{ summary().length }}</p>
+    </pz-card>
+    <pz-card title="Sesiones" subtitle="Registros acumulados">
+      <p class="pz-stat">{{ totalSessions() }}</p>
+    </pz-card>
+    <pz-card title="Mejor carga" subtitle="Maximo historico">
+      <p class="pz-stat">
+        {{ bestWeight() ?? '—' }}
+        @if (bestWeight() !== null) {
+          <small>kg</small>
+        }
+      </p>
+    </pz-card>
+  </section>
+
+  <pz-card title="Resumen por ejercicio" subtitle="Sesiones, mejor y ultima carga">
+    @if (loadingSummary()) {
+      <p class="pz-muted">Cargando resumen...</p>
+    } @else if (summary().length === 0) {
+      <pz-empty-state
+        heading="Aun no hay progreso"
+        description="Registra una sesion desde el detalle de una rutina para empezar tu historial."
+        mark="P"
+      />
+    } @else {
+      <div class="pz-table-wrap">
+        <table class="pz-table">
+          <thead>
+            <tr>
+              <th>Ejercicio</th>
+              <th>Sesiones</th>
+              <th>Mejor carga</th>
+              <th>Ultima carga</th>
+              <th>Ultima sesion</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of summary(); track item.exerciseId) {
+              <tr>
+                <td>
+                  <strong>{{ item.exerciseName }}</strong>
+                </td>
+                <td class="pz-mono">{{ item.sessions }}</td>
+                <td class="pz-mono">{{ item.maxWeightKg ?? '—' }} kg</td>
+                <td class="pz-mono">{{ item.lastWeightKg ?? '—' }} kg</td>
+                <td class="pz-mono">{{ item.lastPerformedOn }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </pz-card>
+
+  <pz-card title="Historial" subtitle="Registros mas recientes primero">
+    <form [formGroup]="filterForm" class="pz-progress-filter" (ngSubmit)="applyFilter()">
+      <label class="pz-field">
+        <span>Filtrar por ejercicio</span>
+        <select formControlName="exerciseId">
+          <option value="">Todos los ejercicios</option>
+          @for (item of summary(); track item.exerciseId) {
+            <option [value]="item.exerciseId">{{ item.exerciseName }}</option>
+          }
+        </select>
+      </label>
+      <div class="pz-progress-filter__actions">
+        <button type="button" class="pz-link" (click)="clearFilter()">Limpiar</button>
+        <button type="submit" class="pz-button-inline">Aplicar</button>
+      </div>
+    </form>
+
+    @if (loadingEntries()) {
+      <p class="pz-muted">Cargando historial...</p>
+    } @else if (entries().length === 0) {
+      <pz-empty-state
+        heading="Sin registros"
+        description="No hay registros para el filtro seleccionado."
+        mark="H"
+      />
+    } @else {
+      <div class="pz-table-wrap">
+        <table class="pz-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Ejercicio</th>
+              <th>Peso</th>
+              <th>Reps</th>
+              <th>Series</th>
+              <th>Notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (entry of entries(); track entry.id) {
+              <tr>
+                <td class="pz-mono">{{ entry.performedOn }}</td>
+                <td>
+                  <strong>{{ entry.exerciseName }}</strong>
+                  @if (entry.routineExerciseId) {
+                    <pz-badge tone="info">Rutina</pz-badge>
+                  }
+                </td>
+                <td class="pz-mono">{{ entry.weightKg ?? '—' }} kg</td>
+                <td class="pz-mono">{{ entry.reps ?? '—' }}</td>
+                <td class="pz-mono">{{ entry.sets ?? '—' }}</td>
+                <td class="pz-progress__notes">{{ entry.notes || '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </pz-card>
+</div>
