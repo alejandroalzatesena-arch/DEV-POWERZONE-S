@@ -22,5 +22,24 @@ Motor: PostgreSQL 16. Migraciones versionadas con Flyway.
 
 ## V2 - Rutinas (Sprint 2)
 
-Se incorpora en la rama `feat/PPP-270-routine-model`: catalogo de ejercicios,
-rutinas, dias, ejercicios de rutina y progreso por ejercicio.
+| Tabla | Proposito |
+|---|---|
+| `exercises` | Catalogo de 29 ejercicios activos por grupo muscular y equipamiento. |
+| `routines` | Cabecera del plan semanal: objetivo, experiencia, dias, estado y origen. |
+| `routine_days` | Dias del plan con nombre y enfoque, unicos por rutina. |
+| `routine_exercises` | Prescripcion por dia: orden, series, repeticiones, descanso y notas. |
+| `exercise_progress` | Registro de cargas del miembro, vinculado o no a la rutina. |
+
+### Reglas
+
+- `exercises.muscle_group` y `difficulty` usan `CHECK` para mantener el dominio
+  cerrado del motor de generacion.
+- `routines.days_per_week` acepta entre 2 y 7 dias; `status` solo admite
+  `ACTIVE` y `ARCHIVED`.
+- Los dias y ejercicios se eliminan en cascada al borrar la rutina; la rutina se
+  archiva en lugar de borrarse para conservar el progreso.
+- `exercise_progress.routine_exercise_id` usa `ON DELETE SET NULL`: el historial
+  sobrevive a cambios de prescripcion.
+- Peso, repeticiones y series se validan en base de datos: 0-500 kg, 1-100 y
+  1-10 respectivamente.
+- `routines.updated_at` se mantiene con el trigger `trg_routines_updated_at`.

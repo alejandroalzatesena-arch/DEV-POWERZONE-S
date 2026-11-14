@@ -113,7 +113,7 @@ Entrega acumulada hasta el **Sprint 2** (en curso al 4 de noviembre de 2026):
 |---|---|---|
 | 0 - Foundation | 05 - 17 oct 2026 | Cerrado |
 | 1 - Autenticacion y usuarios | 19 - 31 oct 2026 | Cerrado |
-| 2 - Rutinas | 02 - 14 nov 2026 | En curso |
+| 2 - Rutinas | 02 - 14 nov 2026 | En curso (alcance entregado) |
 
 Los sprints 3 a 12 estan planificados en Jira y se implementan en las
 siguientes sesiones de trabajo.

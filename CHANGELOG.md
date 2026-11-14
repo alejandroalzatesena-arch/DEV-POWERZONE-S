@@ -4,6 +4,37 @@ Todas las entregas relevantes de PowerZone. El formato sigue
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 versionado por sprint.
 
+## [0.3.0] - 2026-11-14 - Sprint 2: Rutinas y progreso
+
+### Agregado
+
+- Migracion `V2__routine_model.sql` con catalogo de ejercicios, rutinas, dias,
+  ejercicios prescritos y progreso por ejercicio.
+- Catalogo inicial de 29 ejercicios con grupo muscular, equipamiento y dificultad.
+- Reglas de generacion: prescripcion por objetivo y experiencia, split de 2 a 7
+  dias y cantidad de ejercicios por sesion.
+- Motor de generacion que valida el perfil, reparte ejercicios del catalogo sin
+  repetirlos en la misma sesion y equilibra el volumen semanal.
+- API de rutinas: generacion (`POST /api/v1/routines/generate`), listado,
+  detalle, semana y dia, ajuste de prescripcion para ADMIN/TRAINER y archivado.
+- Registro de progreso (`POST /api/v1/progress`), historial con filtros y
+  resumen por ejercicio con mejor carga y ultima sesion.
+- Frontend: generador de rutinas con sincronizacion del perfil, listado, vista
+  semanal, registro de progreso desde la sesion diaria y pantalla `/app/progress`.
+- Servicios y modelos Angular de rutinas y progreso.
+- 46 pruebas nuevas de backend (58 en total) y 21 de frontend (35 en total).
+
+### Cambiado
+
+- La navegacion del panel incorpora la seccion Progreso.
+- El detalle de rutina permite registrar cargas sin salir de la sesion.
+
+### Notas
+
+- Entrega del alcance implementado al corte del 4 de noviembre de 2026. El
+  Sprint 2 permanece en curso en Jira hasta el 14 de noviembre.
+- El Sprint 3 (pagos) se implementa en la siguiente sesion de trabajo.
+
 ## [0.2.0] - 2026-10-31 - Sprint 1: Autenticacion y usuarios
 
 ### Agregado

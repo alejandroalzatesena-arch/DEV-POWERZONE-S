@@ -5,6 +5,7 @@ import {
   AuthResponse,
   LoginPayload,
   RegisterPayload,
+  UpdateProfilePayload,
   User,
 } from './auth.models';
 import { TokenService } from './token.service';
@@ -63,6 +64,13 @@ export class AuthService {
 
   resetPassword(token: string, newPassword: string): Observable<void> {
     return this.api.post<void>('auth/reset-password', { token, newPassword });
+  }
+
+  /** Guarda cambios parciales del perfil y refresca el usuario en memoria. */
+  updateProfile(payload: UpdateProfilePayload): Observable<User> {
+    return this.api.put<User>('users/me', payload).pipe(
+      tap((user) => this.currentUser.set(user)),
+    );
   }
 
   logout(): void {

@@ -47,6 +47,19 @@ export interface RegisterPayload {
   daysPerWeek?: number | null;
 }
 
+/** Cambios parciales del perfil; los campos nulos conservan su valor. */
+export interface UpdateProfilePayload {
+  firstName?: string | null;
+  lastName?: string | null;
+  phone?: string | null;
+  birthDate?: string | null;
+  heightCm?: number | null;
+  weightKg?: number | null;
+  goal?: Goal | null;
+  experienceLevel?: ExperienceLevel | null;
+  daysPerWeek?: number | null;
+}
+
 export const GOAL_OPTIONS: { value: Goal; label: string }[] = [
   { value: 'STRENGTH', label: 'Fuerza' },
   { value: 'HYPERTROPHY', label: 'Hipertrofia' },

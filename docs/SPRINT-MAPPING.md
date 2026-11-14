@@ -9,7 +9,7 @@ Fecha de corte de esta entrega: **4 de noviembre de 2026**.
 |---|---|---|---|
 | 0 - Foundation | 2026-10-05 → 2026-10-17 | Estructura, API base, esquema, frontend base, CI, IA | Cerrado |
 | 1 - Auth y Usuarios | 2026-10-19 → 2026-10-31 | Registro, login, JWT, RBAC, recuperacion | Cerrado |
-| 2 - Rutinas | 2026-11-02 → 2026-11-14 | Modelo, motor de rutinas, API, vistas | En curso |
+| 2 - Rutinas | 2026-11-02 → 2026-11-14 | Modelo, motor de rutinas, API, vistas | En curso (alcance entregado) |
 | 3 - Pagos | 2026-11-16 → 2026-11-28 | Pendiente | No iniciado |
 | 4 - Administracion y CI | 2026-11-30 → 2026-12-12 | Pendiente | No iniciado |
 | 5 - Biblioteca y creador | 2027-01-29 → 2027-02-13 | Pendiente | No iniciado |
@@ -48,12 +48,12 @@ Fecha de corte de esta entrega: **4 de noviembre de 2026**.
 
 | Jira | Entregable |
 |---|---|
-| PPP-270 | Modelo de rutinas y ejercicios |
-| PPP-271 → PPP-273 | Reglas, motor y validacion de perfil |
-| PPP-274 / PPP-278 | Endpoints de generacion, consulta y semana |
-| PPP-279 | Progreso por ejercicio |
-| PPP-276 / PPP-280 → PPP-282 | Vistas Angular de generacion y seguimiento |
-| PPP-277 / PPP-284 | Pruebas backend y frontend |
+| PPP-270 | Modelo de rutinas, catalogo de ejercicios y progreso (Flyway V2) |
+| PPP-271 → PPP-273 | Reglas de prescripcion, split y motor de generacion |
+| PPP-274 / PPP-278 | API de generacion, consulta semanal, ajuste y archivado |
+| PPP-279 | Registro, historial y resumen de progreso |
+| PPP-276 / PPP-280 → PPP-282 | Vistas Angular de generacion, rutina diaria y progreso |
+| PPP-277 / PPP-284 | 58 pruebas backend y 35 frontend integradas al CI |
 
 ## Pendiente para la siguiente sesion
 

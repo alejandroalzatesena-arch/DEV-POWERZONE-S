@@ -67,6 +67,18 @@ export const routes: Routes = [
           import('./pages/routines/pz-routines').then((m) => m.PzRoutines),
       },
       {
+        path: 'routines/:routineId',
+        title: 'Detalle de rutina | PowerZone',
+        loadComponent: () =>
+          import('./pages/routines/pz-routine-detail').then((m) => m.PzRoutineDetail),
+      },
+      {
+        path: 'progress',
+        title: 'Progreso | PowerZone',
+        loadComponent: () =>
+          import('./pages/progress/pz-progress').then((m) => m.PzProgress),
+      },
+      {
         path: 'members',
         title: 'Miembros | PowerZone',
         loadComponent: () => import('./pages/members/pz-members').then((m) => m.PzMembers),
