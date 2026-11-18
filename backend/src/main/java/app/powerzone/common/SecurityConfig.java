@@ -70,8 +70,8 @@ public class SecurityConfig {
                                 "/api/v1/auth/reset-password").permitAll()
                         // El webhook se autentica con la firma de la pasarela, no con JWT.
                         .requestMatchers(HttpMethod.POST, "/api/v1/billing/webhook").permitAll()
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/v1/trainer/**").hasAnyRole("ADMIN", "TRAINER")
+                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/api/v1/trainer/**").hasAnyRole("ADMIN", "TRAINER", "SUPER_ADMIN")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter))

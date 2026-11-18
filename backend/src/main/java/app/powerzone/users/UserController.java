@@ -35,13 +35,13 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'TRAINER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TRAINER', 'SUPER_ADMIN')")
     public List<UserResponse> list(@AuthenticationPrincipal Jwt jwt) {
         return userService.findAllByGym(gymId(jwt));
     }
 
     @PutMapping("/{userId}/role")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
     public ResponseEntity<UserResponse> changeRole(@PathVariable long userId,
                                                    @RequestBody RoleChangeRequest request) {
         return ResponseEntity.ok(userService.changeRole(userId, request.role()));
