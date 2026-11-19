@@ -1,9 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { ApiError } from './api-error';
 
 export type QueryParams = Record<string, string | number | boolean | null | undefined>;
+
+export interface DownloadedFile {
+  blob: Blob;
+  filename: string | null;
+}
 
 /**
  * Cliente HTTP de la aplicacion. Centraliza el prefijo `/api/v1`, la
@@ -44,9 +49,35 @@ export class ApiService {
       .pipe(catchError((error: unknown) => throwError(() => ApiError.from(error))));
   }
 
+  /**
+   * Descarga un archivo binario y conserva el nombre sugerido por el servidor
+   * en `Content-Disposition`.
+   */
+  download(path: string): Observable<DownloadedFile> {
+    return this.http
+      .get(this.url(path), { observe: 'response', responseType: 'blob' })
+      .pipe(
+        map((response) => ({
+          blob: response.body ?? new Blob(),
+          filename: filenameFrom(response.headers.get('Content-Disposition')),
+        })),
+        catchError((error: unknown) => throwError(() => ApiError.from(error))),
+      );
+  }
+
   private url(path: string): string {
     return `${this.baseUrl}/${path.replace(/^\/+/, '')}`;
   }
+}
+
+function filenameFrom(header: string | null): string | null {
+  if (!header) {
+    return null;
+  }
+  const encoded = /filename\*=(?:UTF-8'')?([^;]+)/i.exec(header);
+  const plain = /filename="?([^";]+)"?/i.exec(header);
+  const value = encoded?.[1] ?? plain?.[1];
+  return value ? decodeURIComponent(value.trim().replace(/^"|"$/g, '')) : null;
 }
 
 function toHttpParams(params?: QueryParams): HttpParams {
