@@ -1,0 +1,157 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Pago</p>
+      <h1>Confirmacion del pago</h1>
+      <p>
+        Revisa el resumen de tu transaccion. Al confirmarse el pago, tu membresia se
+        activa automaticamente.
+      </p>
+    </div>
+    <a class="pz-checkout__link" routerLink="/app/payments">Ir a mis pagos</a>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+  @if (notice()) {
+    <p class="pz-notice" role="status">{{ notice() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="pz-muted">Consultando el estado del pago...</p>
+  } @else if (payment(); as p) {
+    <pz-card title="Resumen de la transaccion" [subtitle]="'Referencia ' + p.reference">
+      <div class="pz-checkout__status">
+        @switch (p.status) {
+          @case ('COMPLETED') {
+            <span class="pz-checkout__icon pz-checkout__icon--success" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="m5 12.5 4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          }
+          @case ('FAILED') {
+            <span class="pz-checkout__icon pz-checkout__icon--danger" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="m7 7 10 10M17 7 7 17" stroke-linecap="round" />
+              </svg>
+            </span>
+          }
+          @case ('EXPIRED') {
+            <span class="pz-checkout__icon pz-checkout__icon--danger" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 7.5V12l3 2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          }
+          @default {
+            <span class="pz-checkout__icon pz-checkout__icon--warning" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 7.5V12l3 2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          }
+        }
+        <div class="pz-checkout__status-text">
+          <pz-badge [tone]="statusTones[p.status]">{{ statusLabels[p.status] }}</pz-badge>
+          <strong>{{ stepLabel() }}</strong>
+          @if (p.failureMessage) {
+            <small>{{ p.failureMessage }}</small>
+          }
+        </div>
+      </div>
+
+      <dl class="pz-checkout__facts">
+        <div>
+          <dt>Plan</dt>
+          <dd>{{ p.planName }}</dd>
+        </div>
+        <div>
+          <dt>Monto</dt>
+          <dd class="pz-checkout__amount">{{ money(p.amountCents, p.currency) }}</dd>
+        </div>
+        <div>
+          <dt>Metodo de pago</dt>
+          <dd>{{ p.methodLabel }}</dd>
+        </div>
+        <div>
+          <dt>Intento</dt>
+          <dd>#{{ p.attempt }}</dd>
+        </div>
+        <div>
+          <dt>Creado</dt>
+          <dd>{{ dateTime(p.createdAt) }}</dd>
+        </div>
+        <div>
+          <dt>{{ p.completedAt ? 'Confirmado' : 'Expira' }}</dt>
+          <dd>{{ dateTime(p.completedAt || p.expiresAt) }}</dd>
+        </div>
+      </dl>
+
+      @if (isCompleted()) {
+        <div class="pz-checkout__actions">
+          <button pz-button type="button" [disabled]="downloading()" (click)="downloadReceipt()">
+            {{ downloading() ? 'Generando PDF...' : 'Descargar comprobante' }}
+          </button>
+          <a class="pz-checkout__link" routerLink="/app/payments">Ver historial y membresia</a>
+        </div>
+      } @else if (isFailed()) {
+        <div class="pz-checkout__actions">
+          <a class="pz-checkout__link" routerLink="/app/plans">Intentar con otro pago</a>
+        </div>
+      }
+    </pz-card>
+
+    @if (isPending() && isSandbox()) {
+      <pz-card
+        title="Entorno de pruebas"
+        subtitle="Pasarela simulada: confirma el pago para probar el flujo completo"
+      >
+        <p class="pz-muted pz-checkout__hint">
+          El webhook firmado se genera en el servidor y recorre el mismo camino que un
+          evento real: idempotencia, activacion de membresia y comprobante.
+        </p>
+        <div class="pz-checkout__sandbox">
+          <button pz-button type="button" [disabled]="working()" (click)="pay()">
+            {{ working() ? 'Procesando...' : 'Simular pago aprobado' }}
+          </button>
+          <label class="pz-field">
+            <span>Motivo del rechazo simulado</span>
+            <select [value]="failureCode()" (change)="onFailureCode($event)">
+              @for (code of failureCodes; track code.value) {
+                <option [value]="code.value">{{ code.label }}</option>
+              }
+            </select>
+          </label>
+          <button
+            pz-button
+            variant="danger"
+            type="button"
+            [disabled]="working()"
+            (click)="reject()"
+          >
+            Simular rechazo
+          </button>
+        </div>
+      </pz-card>
+    } @else if (isPending()) {
+      <pz-card title="Esperando confirmacion" subtitle="La pasarela aun no reporta el pago">
+        <p class="pz-muted">
+          Completa el pago en la pasarela alojada. Cuando el banco confirme, esta pantalla
+          se actualizara automaticamente al consultar el estado.
+        </p>
+        <div class="pz-checkout__actions">
+          @if (p.checkoutUrl) {
+            <a class="pz-checkout__link" [href]="p.checkoutUrl" rel="noopener">Abrir pasarela</a>
+          }
+          <button pz-button variant="ghost" type="button" (click)="refresh()">
+            Ya pague, actualizar estado
+          </button>
+        </div>
+      </pz-card>
+    }
+  }
+</div>

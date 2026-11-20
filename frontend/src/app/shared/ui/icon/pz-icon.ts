@@ -1,6 +1,12 @@
 import { Component, input } from '@angular/core';
 
-export type PzIconName = 'dashboard' | 'routines' | 'progress' | 'members' | 'settings';
+export type PzIconName =
+  | 'dashboard'
+  | 'routines'
+  | 'progress'
+  | 'payments'
+  | 'members'
+  | 'settings';
 
 /** Iconos de linea del design system. Uso: `<pz-icon name="routines" />`. */
 @Component({
@@ -29,6 +35,11 @@ export type PzIconName = 'dashboard' | 'routines' | 'progress' | 'members' | 'se
         @case ('progress') {
           <path d="M4 20V5M4 20h16" />
           <path d="M7 15l4-5 3 3 5-7" />
+        }
+        @case ('payments') {
+          <rect x="2.5" y="5.5" width="19" height="13" rx="2.5" />
+          <path d="M2.5 10h19" />
+          <path d="M6 15h3" />
         }
         @case ('members') {
           <circle cx="9" cy="8" r="3.2" />
