@@ -60,6 +60,13 @@ export class PzShell {
       icon: 'progress',
     },
     {
+      label: 'Pagos',
+      path: '/app/payments',
+      exact: false,
+      hint: 'Membresia y comprobantes',
+      icon: 'payments',
+    },
+    {
       label: 'Miembros',
       path: '/app/members',
       exact: false,

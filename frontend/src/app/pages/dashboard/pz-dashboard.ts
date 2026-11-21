@@ -16,6 +16,7 @@ import { PzBadge } from '../../shared/ui/badge/pz-badge';
 import { PzButton } from '../../shared/ui/button/pz-button';
 import { PzCard } from '../../shared/ui/card/pz-card';
 import { PzEmptyState } from '../../shared/ui/empty-state/pz-empty-state';
+import { PzMembershipCard } from '../../shared/ui/membership-card/pz-membership-card';
 
 interface DashboardData {
   routines: RoutineSummary[];
@@ -31,7 +32,7 @@ interface DashboardStat {
 
 @Component({
   selector: 'pz-dashboard',
-  imports: [RouterLink, PzCard, PzBadge, PzButton, PzEmptyState],
+  imports: [RouterLink, PzCard, PzBadge, PzButton, PzEmptyState, PzMembershipCard],
   templateUrl: './pz-dashboard.html',
   styleUrl: './pz-dashboard.scss',
 })

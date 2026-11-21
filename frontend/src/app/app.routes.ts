@@ -79,6 +79,23 @@ export const routes: Routes = [
           import('./pages/progress/pz-progress').then((m) => m.PzProgress),
       },
       {
+        path: 'plans',
+        title: 'Planes y membresia | PowerZone',
+        loadComponent: () => import('./pages/plans/pz-plans').then((m) => m.PzPlans),
+      },
+      {
+        path: 'checkout/:paymentId',
+        title: 'Confirmacion de pago | PowerZone',
+        loadComponent: () =>
+          import('./pages/checkout/pz-checkout').then((m) => m.PzCheckout),
+      },
+      {
+        path: 'payments',
+        title: 'Pagos y membresia | PowerZone',
+        loadComponent: () =>
+          import('./pages/payments/pz-payments').then((m) => m.PzPayments),
+      },
+      {
         path: 'members',
         title: 'Miembros | PowerZone',
         loadComponent: () => import('./pages/members/pz-members').then((m) => m.PzMembers),
