@@ -1,0 +1,78 @@
+<pz-card title="Mi membresia" subtitle="Acceso al gimnasio y vencimiento">
+  @if (showRenew()) {
+    <a card-action class="pz-membership__link" routerLink="/app/plans">Renovar</a>
+  }
+
+  @if (loading()) {
+    <p class="pz-muted">Consultando el estado de tu membresia...</p>
+  } @else if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+    <button pz-button size="sm" type="button" (click)="reload()">Reintentar</button>
+  } @else if (membership(); as m) {
+    <section class="pz-membership" [class]="'pz-membership--' + tone()">
+      <header class="pz-membership__head">
+        <span class="pz-membership__mark" aria-hidden="true">
+          @switch (m.state) {
+            @case ('ACTIVE') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="m5 12.5 4.5 4.5L19 7" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            }
+            @case ('EXPIRING') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="8.5" />
+                <path d="M12 7.5V12l3 2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            }
+            @case ('EXPIRED') {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="m7 7 10 10M17 7 7 17" stroke-linecap="round" />
+              </svg>
+            }
+            @default {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 6v12M6 12h12" stroke-linecap="round" />
+              </svg>
+            }
+          }
+        </span>
+        <div class="pz-membership__identity">
+          <span class="pz-membership__state">{{ stateLabel() }}</span>
+          <strong>{{ m.planName || 'Sin plan activo' }}</strong>
+        </div>
+        <pz-badge [tone]="tone()">{{ stateLabel() }}</pz-badge>
+      </header>
+
+      @if (m.state === 'NONE') {
+        <p class="pz-muted">
+          Activa un plan para reservar clases y entrenar con seguimiento de tu progreso.
+        </p>
+      } @else {
+        <dl class="pz-membership__facts">
+          <div>
+            <dt>Vigencia</dt>
+            <dd>{{ formatDate(m.startsAt) }} &rarr; {{ formatDate(m.endsAt) }}</dd>
+          </div>
+          <div>
+            <dt>Vencimiento</dt>
+            <dd>{{ endDate() }}</dd>
+          </div>
+          <div>
+            <dt>Tiempo restante</dt>
+            <dd>{{ daysLabel() }}</dd>
+          </div>
+        </dl>
+      }
+
+      @if (needsAttention()) {
+        <div class="pz-membership__notice" role="status">
+          <div>
+            <strong>Aviso de membresia</strong>
+            <p>{{ attentionMessage() }}</p>
+          </div>
+          <a class="pz-membership__cta" routerLink="/app/plans">Renovar ahora</a>
+        </div>
+      }
+    </section>
+  }
+</pz-card>
