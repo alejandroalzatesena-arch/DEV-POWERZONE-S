@@ -51,14 +51,7 @@
 .pz-stat-card {
   position: relative;
   overflow: hidden;
-}
-
-.pz-stat-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: linear-gradient(90deg, #c8102e, rgba(200, 16, 46, 0.1));
+  box-shadow: inset 0 1px 0 rgba(200, 16, 46, 0.5), var(--pz-shadow-soft);
 }
 
 .pz-stat {
@@ -132,7 +125,7 @@
   padding: 1rem 1.1rem;
   border-radius: var(--pz-radius-sm);
   border: 1px solid rgba(200, 16, 46, 0.45);
-  border-left: 3px solid #c8102e;
+  border-left: 1px solid #c8102e;
   background:
     linear-gradient(100deg, rgba(200, 16, 46, 0.18), transparent 75%),
     var(--pz-surface);
