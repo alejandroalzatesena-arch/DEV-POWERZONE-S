@@ -6,9 +6,9 @@
   padding: 0.65rem 1.15rem;
   border: 1px solid transparent;
   border-radius: var(--pz-radius-sm);
-  background: var(--pz-primary);
-  color: #1a120b;
-  font-weight: 600;
+  background: var(--pz-brand);
+  color: #fff;
+  font-weight: 700;
   font-size: 0.9rem;
   line-height: 1;
   transition:
@@ -18,7 +18,7 @@
 }
 
 :host(:hover) {
-  background: var(--pz-primary-dark);
+  background: #a50d25;
 }
 
 :host(:active) {

@@ -21,53 +21,8 @@ function passwordsMatch(control: AbstractControl): ValidationErrors | null {
 @Component({
   selector: 'pz-reset-password',
   imports: [ReactiveFormsModule, RouterLink, PzButton],
-  template: `
-    <section class="pz-auth-card">
-      <p class="pz-eyebrow">Nueva contrasena</p>
-      <h1>Crea una contrasena nueva</h1>
-      <p>El enlace es de un solo uso y vence a los 30 minutos.</p>
-
-      @if (!token()) {
-        <p class="pz-alert" role="alert">
-          El enlace no incluye un token valido. Solicita uno nuevo.
-        </p>
-        <p class="pz-auth-card__alt">
-          <a routerLink="/auth/forgot-password">Solicitar otro enlace</a>
-        </p>
-      } @else {
-        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-          <label class="pz-field">
-            <span>Nueva contrasena</span>
-            <input type="password" formControlName="newPassword" autocomplete="new-password" />
-            @if (invalid('newPassword')) {
-              <small class="pz-field__error">Minimo 8 caracteres con letras y numeros.</small>
-            }
-          </label>
-
-          <label class="pz-field">
-            <span>Confirmar contrasena</span>
-            <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
-            @if (form.hasError('passwordsMismatch') && submitted()) {
-              <small class="pz-field__error">Las contrasenas no coinciden.</small>
-            }
-          </label>
-
-          @if (errorMessage()) {
-            <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
-          }
-
-          <button pz-button type="submit" [disabled]="loading()">
-            {{ loading() ? 'Guardando...' : 'Guardar contrasena' }}
-          </button>
-        </form>
-
-        <p class="pz-auth-card__alt">
-          <a routerLink="/auth/login">Volver al inicio de sesion</a>
-        </p>
-      }
-    </section>
-  `,
-  styleUrl: '../login/pz-auth-card.scss',
+  templateUrl: './pz-reset-password.html',
+  styleUrls: ['../login/pz-auth-card.scss', '../pz-auth-forms.scss'],
 })
 export class PzResetPassword {
   private readonly fb = inject(NonNullableFormBuilder);
