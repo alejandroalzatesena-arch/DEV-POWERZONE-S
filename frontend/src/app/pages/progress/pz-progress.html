@@ -1,14 +1,14 @@
-<div class="pz-page">
+<div class="pz-page pz-progress-page">
   <header class="pz-page__header">
     <div>
       <p class="pz-eyebrow">Seguimiento</p>
       <h1>Progreso</h1>
       <p>
-        Historial de cargas por ejercicio y resumen de evolucion. Cada registro queda
-        asociado a tu cuenta y a la rutina que lo origino.
+        Historial de cargas por ejercicio y resumen de evolución. Cada registro queda
+        asociado a tu cuenta y a la rutina que lo originó.
       </p>
     </div>
-    <a class="pz-detail__link" routerLink="/app/routines">Ir a rutinas</a>
+    <a class="pz-detail__link" routerLink="/app/routines">Ir a rutinas &rarr;</a>
   </header>
 
   @if (errorMessage()) {
@@ -22,7 +22,7 @@
     <pz-card title="Sesiones" subtitle="Registros acumulados">
       <p class="pz-stat">{{ totalSessions() }}</p>
     </pz-card>
-    <pz-card title="Mejor carga" subtitle="Maximo historico">
+    <pz-card title="Mejor carga" subtitle="Máximo histórico">
       <p class="pz-stat">
         {{ bestWeight() ?? '—' }}
         @if (bestWeight() !== null) {
@@ -32,13 +32,13 @@
     </pz-card>
   </section>
 
-  <pz-card title="Resumen por ejercicio" subtitle="Sesiones, mejor y ultima carga">
+  <pz-card title="Resumen por ejercicio" subtitle="Sesiones, mejor y última carga">
     @if (loadingSummary()) {
       <p class="pz-muted">Cargando resumen...</p>
     } @else if (summary().length === 0) {
       <pz-empty-state
-        heading="Aun no hay progreso"
-        description="Registra una sesion desde el detalle de una rutina para empezar tu historial."
+        heading="Aún no hay progreso"
+        description="Registra una sesión desde el detalle de una rutina para empezar tu historial."
         mark="P"
       />
     } @else {
@@ -49,8 +49,8 @@
               <th>Ejercicio</th>
               <th>Sesiones</th>
               <th>Mejor carga</th>
-              <th>Ultima carga</th>
-              <th>Ultima sesion</th>
+              <th>Última carga</th>
+              <th>Última sesión</th>
             </tr>
           </thead>
           <tbody>
@@ -71,7 +71,7 @@
     }
   </pz-card>
 
-  <pz-card title="Historial" subtitle="Registros mas recientes primero">
+  <pz-card title="Historial" subtitle="Registros más recientes primero">
     <form [formGroup]="filterForm" class="pz-progress-filter" (ngSubmit)="applyFilter()">
       <label class="pz-field">
         <span>Filtrar por ejercicio</span>
