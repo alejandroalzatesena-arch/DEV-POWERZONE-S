@@ -6,11 +6,11 @@
   --pz-border: #3a2e26;
   --pz-text: #f7f0e7;
   --pz-muted: #b8a899;
-  --pz-primary: #ff7a2f;
-  --pz-primary-dark: #e05f13;
-  --pz-primary-soft: rgba(255, 122, 47, 0.14);
-  --pz-brand: #d03030;
-  --pz-brand-soft: rgba(208, 48, 48, 0.16);
+  --pz-primary: #e82343;
+  --pz-primary-dark: #c8102e;
+  --pz-primary-soft: rgba(200, 16, 46, 0.16);
+  --pz-brand: #c8102e;
+  --pz-brand-soft: rgba(200, 16, 46, 0.16);
   --pz-cream: #f7efe6;
   --pz-danger: #ff4d6d;
   --pz-danger-soft: rgba(255, 77, 109, 0.14);
@@ -47,8 +47,8 @@ body {
   padding: 0;
   min-height: 100%;
   background:
-    radial-gradient(circle at 10% -12%, rgba(255, 122, 47, 0.12), transparent 46%),
-    radial-gradient(circle at 94% -4%, rgba(208, 48, 48, 0.1), transparent 40%),
+    radial-gradient(circle at 10% -12%, rgba(200, 16, 46, 0.14), transparent 46%),
+    radial-gradient(circle at 94% -4%, rgba(142, 15, 33, 0.12), transparent 40%),
     var(--pz-bg);
   color: var(--pz-text);
   font-family: var(--pz-font);
