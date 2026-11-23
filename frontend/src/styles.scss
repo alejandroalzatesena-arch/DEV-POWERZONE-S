@@ -8,6 +8,7 @@
   --pz-muted: #b8a899;
   --pz-primary: #e82343;
   --pz-primary-dark: #c8102e;
+  --pz-link: #ff6b7f;
   --pz-primary-soft: rgba(200, 16, 46, 0.16);
   --pz-brand: #c8102e;
   --pz-brand-soft: rgba(200, 16, 46, 0.16);
@@ -81,8 +82,12 @@ h3 {
 }
 
 a {
-  color: var(--pz-primary);
+  color: var(--pz-link);
   text-decoration: none;
+}
+
+a:hover {
+  color: #ff93a3;
 }
 
 button {
@@ -94,6 +99,46 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--pz-muted);
+  opacity: 1;
+}
+
+input,
+textarea {
+  caret-color: var(--pz-link);
+}
+
+::selection {
+  background: rgba(200, 16, 46, 0.36);
+  color: var(--pz-text);
+}
+
+* {
+  scrollbar-color: #4a3a30 var(--pz-bg);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pz-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a3a30;
+  border: 2px solid var(--pz-bg);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6a5546;
 }
 
 :focus-visible {
@@ -125,7 +170,7 @@ textarea {
   letter-spacing: 0.16em;
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--pz-primary);
+  color: var(--pz-link);
 }
 
 .pz-grid {
@@ -166,6 +211,27 @@ textarea {
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+/* Un único momento de entrada por superficie: la opacidad nunca baja de 0.92. */
+@keyframes pz-enter {
+  from {
+    opacity: 0.92;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pz-page {
+  animation: pz-enter 0.42s ease both;
+}
+
+/* La tarjeta de acceso comparte el keyframe global: sin renombrado por encapsulación. */
+.pz-auth-card {
+  animation: pz-enter 0.5s ease both;
 }
 
 @media (prefers-reduced-motion: reduce) {

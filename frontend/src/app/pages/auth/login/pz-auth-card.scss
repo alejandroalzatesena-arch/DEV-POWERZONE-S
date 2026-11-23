@@ -2,6 +2,7 @@
 .pz-auth-card {
   --pz-primary: #c8102e;
   --pz-primary-dark: #a50d25;
+  --pz-link: #c8102e;
   --pz-primary-soft: rgba(200, 16, 46, 0.08);
   --pz-text: #171717;
   --pz-muted: #6b6b6b;
@@ -90,7 +91,8 @@
 }
 
 .pz-field input::placeholder {
-  color: #a1a1a1;
+  color: #6b6b6b;
+  opacity: 1;
 }
 
 .pz-field input:hover,
@@ -181,6 +183,14 @@
   font-size: 0.82rem;
   line-height: 1.6;
   text-align: center;
+}
+
+.pz-auth-card a {
+  color: var(--pz-link);
+}
+
+.pz-auth-card a:hover {
+  color: #a50d25;
 }
 
 .pz-auth-card__alt a {
