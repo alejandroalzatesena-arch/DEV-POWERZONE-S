@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from './core/auth/auth.guard';
+import { authGuard, guestGuard, roleGuard } from './core/auth/auth.guard';
 
 /**
  * Rutas de la aplicacion. Las vistas de cada dominio se cargan de forma
@@ -98,6 +98,7 @@ export const routes: Routes = [
       {
         path: 'members',
         title: 'Miembros | PowerZone',
+        canActivate: [roleGuard(['TRAINER', 'ADMIN', 'SUPER_ADMIN'])],
         loadComponent: () => import('./pages/members/pz-members').then((m) => m.PzMembers),
       },
       {
