@@ -19,7 +19,11 @@
 
   <pz-membership-card class="pz-payments__membership" />
 
-  <pz-card title="Historial de pagos" [subtitle]="total() + ' transacción(es) registradas'">
+  <pz-card
+    data-testid="payments-total"
+    title="Historial de pagos"
+    [subtitle]="total() + ' transacción(es) registradas'"
+  >
     <form class="pz-payments__filter" [formGroup]="form" (ngSubmit)="applyFilter()">
       <label class="pz-field">
         <span>Desde</span>
@@ -48,6 +52,7 @@
       <p class="pz-muted">Cargando historial...</p>
     } @else if (payments().length === 0) {
       <pz-empty-state
+        data-testid="payments-empty"
         heading="Aún no tienes pagos"
         description="Cuando completes tu primera compra verás aquí el detalle y podrás descargar el comprobante."
         mark="P"
@@ -124,7 +129,7 @@
           >
             Anterior
           </button>
-          <span class="pz-muted">
+          <span class="pz-muted" data-testid="payments-pager">
             Página {{ pageIndex() + 1 }} de {{ totalPages() }}
           </span>
           <button
