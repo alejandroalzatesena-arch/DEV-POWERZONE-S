@@ -10,7 +10,7 @@
     <p class="pz-shell__tagline">Entrena con propósito.<br />Supera tus límites.</p>
 
     <nav class="pz-nav" aria-label="Navegación principal">
-      @for (item of navItems; track item.path) {
+      @for (item of visibleNavItems(); track item.path) {
         <a
           class="pz-nav__item"
           [routerLink]="item.path"

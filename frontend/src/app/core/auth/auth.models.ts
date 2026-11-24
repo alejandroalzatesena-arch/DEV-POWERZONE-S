@@ -1,5 +1,13 @@
 export type Role = 'MEMBER' | 'TRAINER' | 'ADMIN' | 'SUPER_ADMIN';
 export type Goal = 'STRENGTH' | 'HYPERTROPHY' | 'WEIGHT_LOSS' | 'ENDURANCE';
+
+/** Etiquetas visibles para los roles soportados por la API. */
+export const ROLE_LABELS: Record<Role, string> = {
+  MEMBER: 'Miembro',
+  TRAINER: 'Entrenador',
+  ADMIN: 'Administrador',
+  SUPER_ADMIN: 'Super administrador',
+};
 export type ExperienceLevel = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
 
 /** Usuario tal como lo expone la API (sin hash de contrasena). */
