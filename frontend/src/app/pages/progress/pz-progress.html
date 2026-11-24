@@ -37,6 +37,7 @@
       <p class="pz-muted">Cargando resumen...</p>
     } @else if (summary().length === 0) {
       <pz-empty-state
+        data-testid="progress-empty"
         heading="Aún no hay progreso"
         description="Registra una sesión desde el detalle de una rutina para empezar tu historial."
         mark="P"

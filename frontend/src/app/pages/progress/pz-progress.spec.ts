@@ -83,6 +83,8 @@ describe('PzProgress', () => {
     http.expectOne('/api/v1/progress').flush([]);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Aun no hay progreso');
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="progress-empty"]'),
+    ).not.toBeNull();
   });
 });

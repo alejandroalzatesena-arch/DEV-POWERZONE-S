@@ -89,7 +89,10 @@ describe('PzPayments', () => {
 
     expect(text).toContain('Mensual');
     expect(text).toContain('Activa');
-    expect(text).toContain('2 transaccion(es) registradas');
+    expect(
+      (fixture.nativeElement.querySelector('[data-testid="payments-total"]') as HTMLElement)
+        .textContent,
+    ).toContain('2 transacción(es) registradas');
     expect(text).toContain('89.900');
     expect(text).toContain('239.900');
     expect(text).toContain('Pagado');
@@ -118,7 +121,10 @@ describe('PzPayments', () => {
       .flush({ ...pageOf([rejected], 12), page: 1 });
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Pagina 2 de 2');
+    expect(
+      (fixture.nativeElement.querySelector('[data-testid="payments-pager"]') as HTMLElement)
+        .textContent,
+    ).toContain('Página 2 de 2');
   });
 
   it('aplica los filtros y vuelve a la primera pagina', () => {
@@ -149,7 +155,10 @@ describe('PzPayments', () => {
       .flush(pageOf([paid]));
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('1 transaccion(es) registradas');
+    expect(
+      (fixture.nativeElement.querySelector('[data-testid="payments-total"]') as HTMLElement)
+        .textContent,
+    ).toContain('1 transacción(es) registradas');
   });
 
   it('limpia los filtros y recarga el historial', () => {
@@ -171,7 +180,9 @@ describe('PzPayments', () => {
   it('muestra el estado vacio cuando no hay pagos', () => {
     const fixture = create(pageOf([]));
 
-    expect(fixture.nativeElement.textContent).toContain('Aun no tienes pagos');
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="payments-empty"]'),
+    ).not.toBeNull();
     expect(fixture.nativeElement.textContent).toContain('Ver planes');
   });
 
