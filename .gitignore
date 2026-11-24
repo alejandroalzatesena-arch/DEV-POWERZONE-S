@@ -34,3 +34,6 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Evidencia local de revision visual (no se versiona)
+.impeccable/review/
