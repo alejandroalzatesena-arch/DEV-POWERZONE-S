@@ -1,11 +1,11 @@
-<div class="pz-page">
-  <header class="pz-page__header">
+<div class="pz-page pz-dashboard">
+  <header class="pz-page__header pz-dashboard__header">
     <div>
-      <p class="pz-eyebrow">Panel</p>
+      <p class="pz-eyebrow">Resumen</p>
       <h1>Hola, {{ greetingName() }}</h1>
       <p>
         Este es el estado de tu entrenamiento. Genera tu plan, registra tus cargas y revisa
-        como evolucionas semana a semana.
+        cómo evolucionas semana a semana.
       </p>
     </div>
     <div class="pz-dashboard__actions">
@@ -18,9 +18,9 @@
     <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
   }
 
-  <section class="pz-grid" aria-label="Indicadores del entrenamiento">
+  <section class="pz-grid pz-dashboard__stats" aria-label="Indicadores del entrenamiento">
     @for (stat of stats(); track stat.label) {
-      <pz-card>
+      <pz-card class="pz-stat-card">
         <div class="pz-stat">
           <span class="pz-muted">{{ stat.label }}</span>
           <strong>{{ stat.value }}</strong>
@@ -30,7 +30,7 @@
     }
   </section>
 
-  <pz-membership-card />
+  <pz-membership-card class="pz-dashboard__membership" />
 
   <section class="pz-dashboard__columns">
     <pz-card
@@ -49,7 +49,7 @@
               <div class="pz-plan__meta">
                 <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
                 <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
-                <pz-badge tone="success">{{ routine.daysPerWeek }} dias / semana</pz-badge>
+                <pz-badge tone="success">{{ routine.daysPerWeek }} días / semana</pz-badge>
               </div>
             </div>
             <a class="pz-dashboard__link" [routerLink]="['/app/routines', routine.id]">
@@ -59,12 +59,12 @@
 
           @if (nextDay(); as day) {
             <div class="pz-plan__next">
-              <p class="pz-eyebrow">Proxima sesion</p>
+              <p class="pz-eyebrow">Próxima sesión</p>
               <strong>{{ day.name }}</strong>
               <span class="pz-muted">{{ day.focus }} &middot; {{ day.exercises.length }} ejercicios</span>
             </div>
           } @else if (loadingDetail()) {
-            <p class="pz-muted">Cargando los dias de tu plan...</p>
+            <p class="pz-muted">Cargando los días de tu plan...</p>
           }
 
           @if (routineDetail(); as detail) {
@@ -81,8 +81,8 @@
         </div>
       } @else {
         <pz-empty-state
-          heading="Aun no tienes un plan"
-          description="Genera tu primera rutina a partir de tu objetivo, experiencia y dias disponibles."
+          heading="Aún no tienes un plan"
+          description="Genera tu primera rutina a partir de tu objetivo, experiencia y días disponibles."
           mark="R"
         >
           <button pz-button type="button" (click)="goToRoutines()">Generar rutina</button>
@@ -90,7 +90,7 @@
       }
     </pz-card>
 
-    <pz-card title="Ultimos registros" subtitle="Cargas recientes">
+    <pz-card title="Últimos registros" subtitle="Cargas recientes">
       <a card-action class="pz-dashboard__link" routerLink="/app/progress">Historial</a>
 
       @if (loading()) {
@@ -98,7 +98,7 @@
       } @else if (recentEntries().length === 0) {
         <pz-empty-state
           heading="Sin registros"
-          description="Registra tus cargas desde la sesion diaria de tu rutina para ver tu evolucion aqui."
+          description="Registra tus cargas desde la sesión diaria de tu rutina para ver tu evolución aquí."
           mark="P"
         />
       } @else {

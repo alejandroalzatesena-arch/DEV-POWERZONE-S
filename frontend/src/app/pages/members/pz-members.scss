@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.pz-members-page .pz-eyebrow {
+  color: #ff8899;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.pz-members-page h1 {
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.pz-members__tag {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid rgba(200, 16, 46, 0.45);
+  border-radius: 999px;
+  background: var(--pz-primary-soft);
+  color: #ff8899;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.pz-members__panel {
+  border: 1px dashed var(--pz-border);
+  border-radius: var(--pz-radius-sm);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.1), transparent 60%),
+    var(--pz-surface-alt);
+}
+
+.pz-members__panel pz-empty-state {
+  display: block;
+}

@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.pz-not-found {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.18), transparent 45%),
+    var(--pz-bg);
+}
+
+.pz-not-found__card {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+  width: min(34rem, 100%);
+  padding: clamp(2rem, 5vw, 3rem);
+  border: 1px solid var(--pz-border);
+  border-top: 1px solid #c8102e;
+  border-radius: var(--pz-radius);
+  background: var(--pz-surface);
+  box-shadow: var(--pz-shadow);
+  text-align: center;
+}
+
+.pz-not-found__mark {
+  font-family: var(--pz-font);
+  font-size: clamp(3.5rem, 12vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 74, 99, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+.pz-not-found .pz-eyebrow {
+  color: #ff8899;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.pz-not-found h1 {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.pz-not-found p:not(.pz-eyebrow) {
+  max-width: 44ch;
+  line-height: 1.6;
+}
+
+.pz-not-found a {
+  margin-top: 0.5rem;
+}

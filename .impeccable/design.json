@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-23T21:40:00Z",
+  "title": "Design System: PowerZone",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Rojo PowerZone",
+        "canonical": "#e82343",
+        "tonalRamp": ["#2a050c", "#5a0c1a", "#8e1228", "#b81836", "#e82343", "#ef5a70", "#f691a2", "#fdd0d8"]
+      },
+      "primary-deep": {
+        "role": "primary",
+        "displayName": "Rojo Granate",
+        "canonical": "#c8102e",
+        "tonalRamp": ["#24050a", "#490a15", "#700e21", "#a00d25", "#c8102e", "#dd4b63", "#ec8b9b", "#f8cbd3"]
+      },
+      "link": {
+        "role": "primary",
+        "displayName": "Rojo de Lectura",
+        "canonical": "#ff6b7f",
+        "tonalRamp": ["#3d0a12", "#68101f", "#931630", "#bd1e42", "#ff6b7f", "#ff93a3", "#ffc0ca", "#ffe4e8"]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Carbón Profundo",
+        "canonical": "#12100d",
+        "tonalRamp": ["#000000", "#070605", "#0e0b09", "#12100d", "#1b1714", "#2a231d", "#40352c", "#6b5a4b"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Carbón de Superficie",
+        "canonical": "#1b1714",
+        "tonalRamp": ["#080605", "#100d0b", "#171310", "#1b1714", "#241e19", "#312920", "#493b30", "#74614f"]
+      },
+      "surface-alt": {
+        "role": "neutral",
+        "displayName": "Carbón Elevado",
+        "canonical": "#241e19",
+        "tonalRamp": ["#0b0908", "#14100d", "#1e1814", "#241e19", "#312920", "#44382d", "#5f4e40", "#8d7661"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Borde Carbón",
+        "canonical": "#3a2e26",
+        "tonalRamp": ["#15100d", "#221a15", "#2e241d", "#3a2e26", "#4b3c31", "#655243", "#87705c", "#b49b84"]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Marfil PowerZone",
+        "canonical": "#f7f0e7",
+        "tonalRamp": ["#4d453d", "#6e645a", "#91867a", "#b8a899", "#d9cdbf", "#f7f0e7", "#fffaf4", "#ffffff"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Gris Cálido",
+        "canonical": "#b8a899",
+        "tonalRamp": ["#2f2924", "#4a4138", "#685c50", "#8b7d6f", "#b8a899", "#d3c6b8", "#e8dfd5", "#f8f3ec"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Títulos de pantallas públicas y cabeceras con fotografía." },
+      "headline": { "displayName": "Headline", "purpose": "Títulos de página en el interior autenticado." },
+      "title": { "displayName": "Title", "purpose": "Encabezados de tarjeta y grupos de formulario." },
+      "body": { "displayName": "Body", "purpose": "Descripciones, tablas y texto de apoyo." },
+      "label": { "displayName": "Label", "purpose": "Rótulos de sección y etiquetas compactas." }
+    },
+    "shadows": [
+      { "name": "surface", "value": "0 8px 24px rgba(0, 0, 0, 0.3)", "purpose": "Tarjetas y paneles sobre carbón." },
+      { "name": "product", "value": "0 18px 40px rgba(0, 0, 0, 0.45)", "purpose": "Tarjetas de plan resaltadas y estados elevados." },
+      { "name": "auth-card", "value": "0 18px 48px rgba(24, 12, 16, 0.1)", "purpose": "Tarjeta blanca del acceso público." }
+    ],
+    "motion": [
+      { "name": "state", "value": "0.15s ease", "purpose": "Botones, bordes y foco." },
+      { "name": "entrance", "value": "pz-enter 0.42s ease both", "purpose": "Entrada única por superficie en .pz-page y .pz-auth-card; opacidad mínima 0.92, sin escalonado por sección." },
+      { "name": "reduced", "value": "0.01ms", "purpose": "Anulación de animaciones bajo prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "620px" },
+      { "name": "tablet", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal en superficies oscuras y claras.",
+      "html": "<button class=\"ds-btn-primary\">Continuar al pago</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem 1.15rem;border:1px solid transparent;border-radius:var(--pz-radius-sm);background:var(--pz-brand);color:#fff;font:700 .9rem/1 var(--pz-font);cursor:pointer;transition:background .15s ease,transform .15s ease}.ds-btn-primary:hover{background:#a50d25}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--pz-primary);outline-offset:2px}.ds-btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Acción secundaria que conserva el fondo de la superficie.",
+      "html": "<button class=\"ds-btn-ghost\">Ver historial</button>",
+      "css": ".ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;padding:.65rem 1.15rem;border:1px solid var(--pz-border);border-radius:var(--pz-radius-sm);background:transparent;color:var(--pz-text);font:600 .9rem/1 var(--pz-font);cursor:pointer;transition:border-color .15s ease,color .15s ease}.ds-btn-ghost:hover{border-color:var(--pz-primary);color:var(--pz-link)}.ds-btn-ghost:focus-visible{outline:2px solid var(--pz-primary);outline-offset:2px}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Contenedor base del interior autenticado.",
+      "html": "<section class=\"ds-card\"><h3 class=\"ds-card__title\">Resumen</h3><p class=\"ds-card__body\">Contenido de la tarjeta.</p></section>",
+      "css": ".ds-card{display:block;background:var(--pz-surface);border:1px solid var(--pz-border);border-radius:var(--pz-radius);box-shadow:var(--pz-shadow-soft);overflow:hidden;padding:1rem 1.5rem 1.5rem;color:var(--pz-text)}.ds-card__title{font:700 1rem/1.3 var(--pz-font);letter-spacing:-.02em;margin:0}.ds-card__body{margin:.5rem 0 0;color:var(--pz-muted);font:.9rem/1.5 var(--pz-font)}"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo de texto con foco rojo y estado inválido.",
+      "html": "<label class=\"ds-field\"><span>Correo</span><input class=\"ds-input\" type=\"email\" placeholder=\"tu@correo.com\" /></label>",
+      "css": ".ds-field{display:grid;gap:.4rem}.ds-field>span{font:600 .8rem/1.2 var(--pz-font);color:var(--pz-text)}.ds-input{width:100%;min-height:2.7rem;padding:.6rem .75rem;border:1px solid var(--pz-border);border-radius:var(--pz-radius-sm);background:var(--pz-surface-alt);color:var(--pz-text);font:.9rem var(--pz-font)}.ds-input::placeholder{color:var(--pz-muted)}.ds-input:hover{border-color:#5a473b}.ds-input:focus{border-color:var(--pz-primary);outline:none;box-shadow:0 0 0 3px var(--pz-primary-soft)}.ds-input[aria-invalid=\"true\"]{border-color:var(--pz-danger)}"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Estado compacto con variantes semánticas.",
+      "html": "<span class=\"ds-badge ds-badge--success\">Activa</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.2rem .6rem;border-radius:var(--pz-radius-pill);background:var(--pz-surface-alt);border:1px solid var(--pz-border);color:var(--pz-muted);font:700 .72rem/1.2 var(--pz-font);white-space:nowrap}.ds-badge--success{background:var(--pz-success-soft);border-color:transparent;color:var(--pz-success)}.ds-badge--warning{background:var(--pz-warning-soft);border-color:transparent;color:var(--pz-warning)}.ds-badge--danger{background:var(--pz-danger-soft);border-color:transparent;color:var(--pz-danger)}.ds-badge--info{background:var(--pz-info-soft);border-color:transparent;color:var(--pz-info)}"
+    },
+    {
+      "name": "Navigation Item",
+      "kind": "nav",
+      "refersTo": "button-ghost",
+      "description": "Ítem de la navegación lateral con acento en la ruta activa.",
+      "html": "<a class=\"ds-nav-item ds-nav-item--active\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z\" fill=\"currentColor\"/></svg>Panel</a>",
+      "css": ".ds-nav-item{display:flex;align-items:center;gap:.65rem;padding:.6rem .75rem;border-radius:var(--pz-radius-sm);color:var(--pz-muted);font:600 .8rem/1 var(--pz-font);text-decoration:none}.ds-nav-item:hover{background:var(--pz-surface-alt);color:var(--pz-text)}.ds-nav-item--active{background:var(--pz-primary-soft);color:var(--pz-primary)}.ds-nav-item:focus-visible{outline:2px solid var(--pz-primary);outline-offset:2px}"
+    },
+    {
+      "name": "Auth Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Tarjeta clara de 410px para acceso público.",
+      "html": "<section class=\"ds-auth-card\"><p class=\"ds-auth-eyebrow\">Bienvenido de nuevo</p><h1 class=\"ds-auth-title\">Inicia sesión</h1></section>",
+      "css": ".ds-auth-card{display:grid;gap:1.5rem;width:min(25.625rem,100%);padding:2.25rem 2rem;border:1px solid #ededed;border-radius:12px;background:#fff;box-shadow:0 18px 48px rgba(24,12,16,.1);color:#171717}.ds-auth-eyebrow{margin:0;color:#c8102e;font:700 .69rem/1.2 var(--pz-font);letter-spacing:.18em;text-transform:uppercase}.ds-auth-title{margin:0;font:800 2rem/1.12 var(--pz-font);letter-spacing:-.04em}"
+    },
+    {
+      "name": "Membership Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Estado de membresía con acento lateral de 1px.",
+      "html": "<section class=\"ds-membership\"><span class=\"ds-badge ds-badge--success\">Activa</span><strong>Membresía mensual</strong></section>",
+      "css": ".ds-membership{display:grid;gap:.4rem;padding:1rem 1.1rem;border:1px solid var(--pz-border);border-left:1px solid #c8102e;border-radius:var(--pz-radius-sm);background:var(--pz-surface);color:var(--pz-text)}.ds-membership strong{font:700 1rem/1.3 var(--pz-font)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La antesala del gimnasio",
+    "overview": "PowerZone se construye como un gimnasio real visto desde dentro: carbón cálido, acero, fotografía de sala de pesas y un rojo que solo aparece cuando hay una acción, una decisión o una señal de progreso. No es una consola SaaS neutra ni un catálogo de tarjetas flotantes. La jerarquía es directa, los números se leen como datos de entrenamiento y el espacio sobra entre bloques para que la pantalla respire.\n\nHay dos registros conectados por el mismo acento. El acceso público es claro y fotográfico: panel de marca a sangre con el logo y el slogan, y tarjeta blanca de 410px al lado. El interior autenticado es oscuro y operativo: navegación lateral, cabeceras compactas, tarjetas sobre carbón y rojo para el foco, la selección y el estado. La fotografía real aparece solo donde aporta contexto —acceso y planes—; nunca se usa como textura decorativa en el resto de la app.",
+    "keyCharacteristics": [
+      "Carbón cálido (#12100d, #1b1714, #241e19) como campo por defecto.",
+      "Rojo #c8102e como acento único de acción, selección y foco; #e82343 para realces sobre fondo oscuro.",
+      "Inter con títulos 800 y tracking -0.04em; números en tabular-nums cuando representan cargas, importes o fechas.",
+      "Tarjetas de 14px de radio, borde 1px y sombra suave con desplazamiento vertical.",
+      "Fotografía licenciada local, tratada con veladura granate, nunca depender de un host externo en runtime."
+    ],
+    "rules": [
+      { "name": "The Red Is a Signal Rule", "body": "El rojo no rellena superficies grandes en el interior; marca foco, selección, eyebrow, CTA y estado. Su rareza es la jerarquía.", "section": "colors" },
+      { "name": "The Contract Eyebrow Exception", "body": "El floor de craft prohíbe un eyebrow sobre el encabezado, pero los contratos pinnados de Login y Planes fijan BIENVENIDO DE NUEVO y TU PLAN en el primer viewport. Se conservan solo en esas dos superficies.", "section": "typography" },
+      { "name": "The Warm Carbon Rule", "body": "El interior nunca usa gris frío ni azul pizarra; si una superficie parece neutra, debe seguir siendo marrón-carbón.", "section": "colors" },
+      { "name": "The Tabular Numbers Rule", "body": "Importes, cargas, repeticiones y fechas usan font-variant-numeric: tabular-nums para que las columnas se lean como una tabla, no como prosa.", "section": "typography" },
+      { "name": "The Offset Rule", "body": "Toda sombra lleva desplazamiento vertical y desenfoque suave; un halo de color sin desplazamiento es decoración, no profundidad.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar #c8102e como acento canónico y #e82343 solo como realce sobre carbón.",
+      "Do mantener tabular-nums en importes, cargas y fechas.",
+      "Do reservar fotografías locales para el panel de acceso y la cabecera de planes, con veladura granate.",
+      "Do conservar focus visible de 2px en rojo, caret y ::selection tematizados, scrollbars sobre carbón y objetivos táctiles cómodos en móvil."
+    ],
+    "donts": [
+      "Don't introducir azul pizarra, gris frío ni superficies de vidrio translúcido; el interior es carbón cálido.",
+      "Don't usar bordes de acento de 3px ni franjas laterales gruesas: la selección es borde de 1px + halo.",
+      "Don't usar #e82343 como texto pequeño sobre carbón; para lectura usa #ff6b7f.",
+      "Don't inventar precios, métricas ni estados de demo; los datos vienen del backend.",
+      "Don't extender los rótulos en mayúsculas con tracking a nuevas pantallas: son una concesión al copy del Figma, no una regla heredable, salvo la excepción documentada de Login y Planes."
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+.pz-empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.55rem;
+  padding: 2.75rem 1.5rem;
+  text-align: center;
+}
+
+.pz-empty__mark {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px;
+  border: 1px solid rgba(200, 16, 46, 0.42);
+  background: var(--pz-primary-soft);
+  color: #ff8899;
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin-bottom: 0.35rem;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+p {
+  max-width: 46ch;
+  color: var(--pz-muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
