@@ -74,6 +74,8 @@ describe('PzRoutines', () => {
     http.expectOne('/api/v1/routines').flush([]);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Aun no tienes rutinas');
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="routines-empty"]'),
+    ).not.toBeNull();
   });
 });

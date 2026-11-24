@@ -76,6 +76,7 @@
         <p class="pz-muted">Cargando rutinas...</p>
       } @else if (routinesList().length === 0) {
         <pz-empty-state
+          data-testid="routines-empty"
           heading="Aún no tienes rutinas"
           description="Completa tu perfil y pulsa Generar rutina para crear tu primer plan semanal."
           mark="R"

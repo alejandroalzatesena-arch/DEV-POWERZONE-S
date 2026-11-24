@@ -81,8 +81,12 @@ describe('PzCheckout', () => {
     const fixture = create(pending, '');
     const text = fixture.nativeElement.textContent as string;
 
+    const pendingPanel = fixture.nativeElement.querySelector(
+      '[data-testid="checkout-pending"]',
+    ) as HTMLElement | null;
+
     expect(text).not.toContain('Entorno de pruebas');
-    expect(text).toContain('Esperando confirmacion');
+    expect(pendingPanel?.textContent).toContain('Esperando confirmación');
     expect(text).toContain('Abrir pasarela');
   });
 

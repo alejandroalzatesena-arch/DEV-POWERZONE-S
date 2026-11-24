@@ -138,7 +138,11 @@
         </div>
       </pz-card>
     } @else if (isPending()) {
-      <pz-card title="Esperando confirmación" subtitle="La pasarela aún no reporta el pago">
+      <pz-card
+        data-testid="checkout-pending"
+        title="Esperando confirmación"
+        subtitle="La pasarela aún no reporta el pago"
+      >
         <p class="pz-muted">
           Completa el pago en la pasarela alojada. Cuando el banco confirme, esta pantalla
           se actualizará automáticamente al consultar el estado.
