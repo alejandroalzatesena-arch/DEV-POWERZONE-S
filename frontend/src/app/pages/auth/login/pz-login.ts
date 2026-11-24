@@ -8,64 +8,7 @@ import { PzButton } from '../../../shared/ui/button/pz-button';
 @Component({
   selector: 'pz-login',
   imports: [ReactiveFormsModule, RouterLink, PzButton],
-  template: `
-    <section class="pz-auth-card">
-      <p class="pz-eyebrow">Acceso</p>
-      <h1>Inicia sesion</h1>
-      <p>Entra con tu cuenta para consultar tu rutina, tu progreso y tus datos.</p>
-
-      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-        <label class="pz-field">
-          <span>Email</span>
-          <input
-            type="email"
-            formControlName="email"
-            autocomplete="email"
-            placeholder="tu@correo.com"
-            [attr.aria-invalid]="invalid('email')"
-          />
-          @if (invalid('email')) {
-            <small class="pz-field__error">Ingresa un email valido.</small>
-          }
-        </label>
-
-        <label class="pz-field">
-          <span>Contrasena</span>
-          <input
-            type="password"
-            formControlName="password"
-            autocomplete="current-password"
-            placeholder="Minimo 8 caracteres"
-            [attr.aria-invalid]="invalid('password')"
-          />
-          @if (invalid('password')) {
-            <small class="pz-field__error">La contrasena debe tener al menos 8 caracteres.</small>
-          }
-        </label>
-
-        <div class="pz-field-row">
-          <label class="pz-check">
-            <input type="checkbox" formControlName="rememberMe" />
-            Recordarme
-          </label>
-          <a routerLink="/auth/forgot-password">Olvide mi contrasena</a>
-        </div>
-
-        @if (errorMessage()) {
-          <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
-        }
-
-        <button pz-button type="submit" [disabled]="loading()">
-          {{ loading() ? 'Ingresando...' : 'Entrar' }}
-        </button>
-      </form>
-
-      <p class="pz-auth-card__alt">
-        Nuevo en PowerZone?
-        <a routerLink="/auth/register">Crear una cuenta</a>
-      </p>
-    </section>
-  `,
+  templateUrl: './pz-login.html',
   styleUrl: './pz-auth-card.scss',
 })
 export class PzLogin {

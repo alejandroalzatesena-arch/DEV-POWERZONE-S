@@ -11,7 +11,7 @@ Fecha de corte de esta entrega: **28 de noviembre de 2026**.
 | 1 - Auth y Usuarios | 2026-10-19 → 2026-10-31 | Registro, login, JWT, RBAC, recuperacion | Cerrado |
 | 2 - Rutinas | 2026-11-02 → 2026-11-14 | Modelo, motor de rutinas, API, vistas | Cerrado |
 | 3 - Pagos | 2026-11-16 → 2026-11-28 | Pasarela, membresias, historial, comprobantes | Cerrado |
-| 4 - Administracion y CI | 2026-11-30 → 2026-12-12 | Pendiente | No iniciado |
+| 4 - Administracion y CI | 2026-11-30 → 2026-12-12 | Rediseño, Postman, RBAC y panel por rol | Cerrado |
 | 5 - Biblioteca y creador | 2027-01-29 → 2027-02-13 | Pendiente | No iniciado |
 | 6 - Tracking | 2027-02-15 → 2027-02-28 | Pendiente | No iniciado |
 | 7 - Control de acceso | 2027-03-01 → 2027-03-14 | Pendiente | No iniciado |
@@ -72,11 +72,21 @@ Fecha de corte de esta entrega: **28 de noviembre de 2026**.
 | PPP-318 | 48 pruebas de frontend del dominio de pagos |
 | PPP-22 / PPP-23 | Detalle tecnico en `docs/PAYMENTS.md` |
 
+## Sprint 4 - Administracion y CI
+
+| Jira | Entregable |
+|---|---|
+| PPP-58 | Correccion de autorizacion para `SUPER_ADMIN` en seguridad y controladores |
+| PPP-467 | Coleccion y entorno de Postman para la API `/api/v1` |
+| PPP-466 | Rediseño visual del frontend y sistema documentado en `DESIGN.md` |
+| PPP-323 | Navegacion por rol, `roleGuard` y service de autenticación por rol |
+| PPP-235 | Panel de miembro y panel de staff con datos reales de la API |
+
 ## Pendiente para la siguiente sesion
 
-Comenzar en **Sprint 4 - Administracion y CI** (2026-11-30 → 2026-12-12) usando el
+Comenzar en **Sprint 5 - Biblioteca y creador** (2027-01-29 → 2027-02-13) usando el
 mismo flujo: rama por funcionalidad, PR a `develop`, release a `main` y tag
-`sprint-4`.
+`sprint-5`.
 
 Antes de continuar, revisar Jira PPP porque los sprints 9-12 tienen fechas solapadas
 (PPP-302) y deben replanificarse con el equipo.

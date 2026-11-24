@@ -1,10 +1,10 @@
-<div class="pz-page">
+<div class="pz-page pz-settings-page">
   <header class="pz-page__header">
     <div>
       <p class="pz-eyebrow">Tu cuenta</p>
       <h1>Ajustes</h1>
       <p>
-        Administra tus datos personales y tu perfil de entrenamiento. Esta informacion es la
+        Administra tus datos personales y tu perfil de entrenamiento. Esta información es la
         base con la que generamos tus rutinas.
       </p>
     </div>
@@ -17,7 +17,7 @@
 
   <form [formGroup]="form" (ngSubmit)="save()" novalidate class="pz-settings__form">
     <section class="pz-settings__columns">
-      <pz-card title="Datos personales" subtitle="Como te identificamos">
+      <pz-card title="Datos personales" subtitle="Cómo te identificamos">
         <div class="pz-settings__fields">
           <div class="pz-form-grid">
             <label class="pz-field">
@@ -38,10 +38,10 @@
 
           <div class="pz-form-grid">
             <label class="pz-field">
-              <span>Telefono</span>
+              <span>Teléfono</span>
               <input type="tel" formControlName="phone" autocomplete="tel" />
               @if (invalid('phone')) {
-                <small class="pz-field__error">Maximo 30 caracteres.</small>
+                <small class="pz-field__error">Máximo 30 caracteres.</small>
               }
             </label>
             <label class="pz-field">
@@ -92,13 +92,13 @@
           </label>
 
           <label class="pz-field">
-            <span>Dias de entrenamiento por semana</span>
+            <span>Días de entrenamiento por semana</span>
             <input type="number" formControlName="daysPerWeek" min="2" max="7" />
             @if (invalid('daysPerWeek')) {
-              <small class="pz-field__error">Entre 2 y 7 dias.</small>
+              <small class="pz-field__error">Entre 2 y 7 días.</small>
             }
             <small class="pz-field__hint">
-              Con estos datos generamos tu plan semanal desde la seccion Rutinas.
+              Con estos datos generamos tu plan semanal desde la sección Rutinas.
             </small>
           </label>
         </div>
@@ -106,7 +106,7 @@
     </section>
 
     <div class="pz-settings__actions">
-      <p class="pz-muted">Tu email y tu rol no se pueden cambiar desde aqui.</p>
+      <p class="pz-muted">Tu email y tu rol no se pueden cambiar desde aquí.</p>
       <div class="pz-settings__buttons">
         <button
           pz-button
@@ -142,9 +142,9 @@
       </dl>
     </pz-card>
 
-    <pz-card title="Contrasena" subtitle="Cambio seguro">
+    <pz-card title="Contraseña" subtitle="Cambio seguro">
       <p class="pz-muted pz-settings__hint">
-        Te enviaremos un enlace a tu email para que definas una nueva contrasena.
+        Te enviaremos un enlace a tu email para que definas una nueva contraseña.
       </p>
       <button
         pz-button

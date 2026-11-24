@@ -1,11 +1,11 @@
-<div class="pz-page">
+<div class="pz-page pz-routines-page">
   <header class="pz-page__header">
     <div>
       <p class="pz-eyebrow">Entrenamiento</p>
       <h1>Rutinas</h1>
       <p>
-        Genera tu plan semanal segun objetivo, experiencia y dias disponibles. Cada rutina
-        queda guardada con su prescripcion de series, repeticiones y descanso.
+        Genera tu plan semanal según objetivo, experiencia y días disponibles. Cada rutina
+        queda guardada con su prescripción de series, repeticiones y descanso.
       </p>
     </div>
     <button pz-button type="button" (click)="generate()" [disabled]="generating()">
@@ -18,7 +18,7 @@
   }
 
   <section class="pz-routines">
-    <pz-card title="Perfil de entrenamiento" subtitle="Base para la generacion">
+    <pz-card title="Perfil de entrenamiento" subtitle="Base para la generación">
       <form [formGroup]="form" class="pz-routines__form" (ngSubmit)="generate()" novalidate>
         <label class="pz-field">
           <span>Objetivo</span>
@@ -47,7 +47,7 @@
         </label>
 
         <label class="pz-field">
-          <span>Dias por semana</span>
+          <span>Días por semana</span>
           <input
             type="number"
             formControlName="daysPerWeek"
@@ -56,7 +56,7 @@
             [attr.aria-invalid]="invalid('daysPerWeek')"
           />
           @if (invalid('daysPerWeek')) {
-            <small class="pz-field__error">Elige entre 2 y 7 dias.</small>
+            <small class="pz-field__error">Elige entre 2 y 7 días.</small>
           }
         </label>
 
@@ -67,7 +67,7 @@
 
       <p class="pz-muted pz-routines__hint">
         Al generar actualizamos tu perfil con estos valores para que el motor calcule el split
-        semanal y la prescripcion adecuada.
+        semanal y la prescripción adecuada.
       </p>
     </pz-card>
 
@@ -76,7 +76,7 @@
         <p class="pz-muted">Cargando rutinas...</p>
       } @else if (routinesList().length === 0) {
         <pz-empty-state
-          heading="Aun no tienes rutinas"
+          heading="Aún no tienes rutinas"
           description="Completa tu perfil y pulsa Generar rutina para crear tu primer plan semanal."
           mark="R"
         />
@@ -89,14 +89,14 @@
                 <div class="pz-routine-list__meta">
                   <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
                   <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
-                  <pz-badge tone="success">{{ routine.daysPerWeek }} dias</pz-badge>
+                  <pz-badge tone="success">{{ routine.daysPerWeek }} días</pz-badge>
                   @if (routine.status === 'ARCHIVED') {
                     <pz-badge tone="warning">Archivada</pz-badge>
                   }
                 </div>
               </div>
               <a class="pz-routine-list__link" [routerLink]="['/app/routines', routine.id]">
-                Ver plan
+                Ver plan <span aria-hidden="true">&rarr;</span>
               </a>
             </li>
           }

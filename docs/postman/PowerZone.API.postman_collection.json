@@ -1,0 +1,480 @@
+{
+  "info": {
+    "name": "PowerZone API",
+    "_postman_id": "f7a6f5e0-2f2b-4f4f-9f3b-4e8e0f1a1002",
+    "description": "Colección de requests para la API de PowerZone (/api/v1). Usa el entorno PowerZone Local. El login/refresh gestionan la cookie HttpOnly pz_refresh; habilita el cookie jar de Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "00 - Setup & Docs",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/health"
+          }
+        },
+        {
+          "name": "OpenAPI JSON",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/docs-json"
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 - Auth",
+      "item": [
+        {
+          "name": "Register (MEMBER)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"member@example.com\",\n  \"password\": \"Password123\",\n  \"firstName\": \"Ana\",\n  \"lastName\": \"Gomez\",\n  \"phone\": \"3001234567\",\n  \"birthDate\": \"1998-05-10\",\n  \"heightCm\": 170.0,\n  \"weightKg\": 68.0,\n  \"goal\": \"HYPERTROPHY\",\n  \"experienceLevel\": \"BEGINNER\",\n  \"daysPerWeek\": 3\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.accessToken) pm.environment.set('accessToken', json.accessToken);",
+                  "  if (json.user && json.user.id !== undefined) pm.environment.set('userId', String(json.user.id));",
+                  "  if (json.user && json.user.gymId !== undefined) pm.environment.set('gymId', String(json.user.gymId));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"member@example.com\",\n  \"password\": \"Password123\",\n  \"rememberMe\": false\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/login"
+          }
+        },
+        {
+          "name": "Refresh",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.accessToken) pm.environment.set('accessToken', json.accessToken);",
+                  "  if (json.user && json.user.id !== undefined) pm.environment.set('userId', String(json.user.id));",
+                  "  if (json.user && json.user.gymId !== undefined) pm.environment.set('gymId', String(json.user.gymId));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/auth/refresh",
+            "description": "Renueva el access token usando la cookie HttpOnly pz_refresh guardada por Postman."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/auth/logout"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"member@example.com\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/forgot-password"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<reset-token>\",\n  \"newPassword\": \"NewPassword123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/auth/reset-password"
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Users",
+      "item": [
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/users/me"
+          }
+        },
+        {
+          "name": "Update Me",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Ana\",\n  \"lastName\": \"Gomez\",\n  \"phone\": \"3001234567\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/users/me",
+            "description": "Ajusta el body según UpdateProfileRequest."
+          }
+        },
+        {
+          "name": "List Users (ADMIN, TRAINER)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/users",
+            "description": "Requiere rol ADMIN o TRAINER."
+          }
+        },
+        {
+          "name": "Change Role (ADMIN)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"TRAINER\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/users/{{memberUserId}}/role",
+            "description": "Requiere rol ADMIN. Valores esperados: MEMBER, TRAINER, ADMIN, SUPER_ADMIN (según configuración del proyecto)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Routines",
+      "item": [
+        {
+          "name": "Generate Routine",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{memberUserId}}\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/routines/generate",
+            "description": "Body opcional (GenerateRoutineRequest). Para rutina propia puede omitirse o enviarse sin userId según reglas del servicio."
+          }
+        },
+        {
+          "name": "List Routines",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/routines?userId={{memberUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "routines"],
+              "query": [
+                { "key": "userId", "value": "{{memberUserId}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Routine Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/routines/{{routineId}}"
+          }
+        },
+        {
+          "name": "Routine Week",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/routines/{{routineId}}/week"
+          }
+        },
+        {
+          "name": "Routine Day",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/routines/{{routineId}}/days/1"
+          }
+        },
+        {
+          "name": "Update Prescription (ADMIN, TRAINER)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sets\": 4,\n  \"reps\": \"10-12\",\n  \"restSeconds\": 90\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/routines/{{routineId}}/exercises/{{routineExerciseId}}",
+            "description": "Requiere ADMIN o TRAINER (@PreAuthorize). Ajusta el body según UpdatePrescriptionRequest."
+          }
+        },
+        {
+          "name": "Archive Routine",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/routines/{{routineId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Progress",
+      "item": [
+        {
+          "name": "Register Progress",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exerciseId\": {{exerciseId}},\n  \"weightKg\": 40.0,\n  \"repetitions\": 10,\n  \"sets\": 4,\n  \"performedAt\": \"2026-11-18\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/progress",
+            "description": "Ajusta el body según ProgressRequest."
+          }
+        },
+        {
+          "name": "List Progress",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/progress?exerciseId={{exerciseId}}&from={{fromDate}}&to={{toDate}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "progress"],
+              "query": [
+                { "key": "exerciseId", "value": "{{exerciseId}}", "disabled": true },
+                { "key": "from", "value": "{{fromDate}}", "disabled": true },
+                { "key": "to", "value": "{{toDate}}", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Progress Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/progress/summary"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Billing",
+      "item": [
+        {
+          "name": "Plans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/plans"
+          }
+        },
+        {
+          "name": "Payment Methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/payment-methods"
+          }
+        },
+        {
+          "name": "Checkout",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201 || pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  if (json.paymentId !== undefined) pm.environment.set('paymentId', String(json.paymentId));",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"planId\": 1,\n  \"paymentMethodId\": 1\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/billing/checkout",
+            "description": "Ajusta el body según CheckoutRequest."
+          }
+        },
+        {
+          "name": "Payments History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/billing/payments?userId={{memberUserId}}&from={{fromDate}}&to={{toDate}}&status=PENDING&page=0&size=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "billing", "payments"],
+              "query": [
+                { "key": "userId", "value": "{{memberUserId}}", "disabled": true },
+                { "key": "from", "value": "{{fromDate}}", "disabled": true },
+                { "key": "to", "value": "{{toDate}}", "disabled": true },
+                { "key": "status", "value": "PENDING", "disabled": true },
+                { "key": "page", "value": "0", "disabled": true },
+                { "key": "size", "value": "10", "disabled": true }
+              ]
+            },
+            "description": "Staff (ADMIN/TRAINER/SUPER_ADMIN según lógica interna) puede consultar otros usuarios; miembros ven su propio historial según reglas del servicio."
+          }
+        },
+        {
+          "name": "Payment Detail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/payments/{{paymentId}}"
+          }
+        },
+        {
+          "name": "Membership Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/membership"
+          }
+        },
+        {
+          "name": "Receipt (PDF)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/payments/{{paymentId}}/receipt",
+            "description": "Usa 'Send and Download' en Postman para guardar el PDF."
+          }
+        },
+        {
+          "name": "Sandbox Pay",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/billing/payments/{{paymentId}}/sandbox/pay"
+          }
+        },
+        {
+          "name": "Sandbox Fail",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"failureCode\": \"INSUFFICIENT_FUNDS\"\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/billing/payments/{{paymentId}}/sandbox/fail",
+            "description": "Body opcional (SandboxFailureRequest)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Billing Webhook (No Auth, HMAC)",
+      "item": [
+        {
+          "name": "Webhook",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "X-PowerZone-Signature", "value": "<hmac-signature>" },
+              { "key": "X-PowerZone-Timestamp", "value": "<timestamp>" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": \"evt_test_001\",\n  \"type\": \"payment.completed\",\n  \"data\": {\n    \"externalReference\": \"<external-reference>\"\n  }\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/billing/webhook",
+            "description": "Endpoint público sin JWT. Requiere firma HMAC válida según PAYMENTS_WEBHOOK_SECRET. Ajusta payload/headers al contrato real del gateway."
+          }
+        }
+      ]
+    }
+  ]
+}

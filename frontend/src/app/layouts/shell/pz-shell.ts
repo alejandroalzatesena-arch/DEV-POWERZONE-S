@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
+import { ROLE_LABELS } from '../../core/auth/auth.models';
 import { PzIcon, PzIconName } from '../../shared/ui/icon/pz-icon';
 
 interface NavItem {
@@ -31,19 +32,11 @@ export class PzShell {
     return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
   });
   protected readonly roleLabel = computed(() => {
-    switch (this.user()?.role) {
-      case 'ADMIN':
-        return 'Administrador';
-      case 'TRAINER':
-        return 'Entrenador';
-      case 'SUPER_ADMIN':
-        return 'Super administrador';
-      default:
-        return 'Miembro';
-    }
+    const role = this.user()?.role;
+    return role ? ROLE_LABELS[role] : 'Miembro';
   });
 
-  protected readonly navItems: NavItem[] = [
+  private readonly memberNavItems: NavItem[] = [
     { label: 'Panel', path: '/app/dashboard', exact: true, hint: 'Resumen general', icon: 'dashboard' },
     {
       label: 'Rutinas',
@@ -67,13 +60,6 @@ export class PzShell {
       icon: 'payments',
     },
     {
-      label: 'Miembros',
-      path: '/app/members',
-      exact: false,
-      hint: 'Directorio del gimnasio',
-      icon: 'members',
-    },
-    {
       label: 'Ajustes',
       path: '/app/settings',
       exact: false,
@@ -81,6 +67,22 @@ export class PzShell {
       icon: 'settings',
     },
   ];
+
+  private readonly staffNavItems: NavItem[] = [
+    ...this.memberNavItems.slice(0, 4),
+    {
+      label: 'Miembros',
+      path: '/app/members',
+      exact: false,
+      hint: 'Directorio del gimnasio',
+      icon: 'members',
+    },
+    ...this.memberNavItems.slice(4),
+  ];
+
+  protected readonly visibleNavItems = computed(() =>
+    this.auth.isStaff() ? this.staffNavItems : this.memberNavItems,
+  );
 
   protected logout(): void {
     this.auth.logout();

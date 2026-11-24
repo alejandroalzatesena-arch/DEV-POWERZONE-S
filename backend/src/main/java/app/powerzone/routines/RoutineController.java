@@ -73,7 +73,7 @@ public class RoutineController {
 
     /** Ajuste de series, repeticiones y descanso por entrenador o administrador. */
     @PutMapping("/{routineId}/exercises/{routineExerciseId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'TRAINER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'TRAINER', 'SUPER_ADMIN')")
     public ResponseEntity<Void> updatePrescription(
             @AuthenticationPrincipal Jwt jwt,
             @PathVariable long routineId,

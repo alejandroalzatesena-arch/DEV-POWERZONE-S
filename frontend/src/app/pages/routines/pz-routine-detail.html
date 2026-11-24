@@ -1,4 +1,4 @@
-<div class="pz-page">
+<div class="pz-page pz-detail-page">
   <a class="pz-back" routerLink="/app/routines">&larr; Volver a rutinas</a>
 
   @if (loading()) {
@@ -13,7 +13,7 @@
         <div class="pz-detail__meta">
           <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
           <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
-          <pz-badge tone="success">{{ routine.daysPerWeek }} dias</pz-badge>
+          <pz-badge tone="success">{{ routine.daysPerWeek }} días</pz-badge>
           <pz-badge>{{ weekVolume() }} ejercicios / semana</pz-badge>
           @if (routine.status === 'ARCHIVED') {
             <pz-badge tone="warning">Archivada</pz-badge>
@@ -23,7 +23,7 @@
       <a class="pz-detail__link" routerLink="/app/progress">Ver progreso</a>
     </header>
 
-    <nav class="pz-day-tabs" aria-label="Dias de la rutina">
+    <nav class="pz-day-tabs" aria-label="Días de la rutina">
       @for (day of routine.days; track day.id) {
         <button
           type="button"
@@ -32,18 +32,18 @@
           [attr.aria-pressed]="day.dayNumber === selectedDay()"
           (click)="selectDay(day.dayNumber)"
         >
-          <span>Dia {{ day.dayNumber }}</span>
+          <span>Día {{ day.dayNumber }}</span>
           <strong>{{ day.name }}</strong>
         </button>
       }
     </nav>
 
     @if (activeDay(); as day) {
-      <pz-card [title]="'Dia ' + day.dayNumber + ' - ' + day.name" [subtitle]="day.focus">
+      <pz-card [title]="'Día ' + day.dayNumber + ' - ' + day.name" [subtitle]="day.focus">
         @if (day.exercises.length === 0) {
           <pz-empty-state
             heading="Sin ejercicios"
-            description="Este dia no tiene ejercicios prescritos."
+            description="Este día no tiene ejercicios prescritos."
             mark="E"
           />
         } @else {
@@ -66,7 +66,7 @@
                     <td>
                       <strong>{{ exercise.name }}</strong>
                       <small class="pz-detail__sub">
-                        {{ muscleLabel(exercise.muscleGroup) }} ·
+                        {{ muscleLabel(exercise.muscleGroup) }} &middot;
                         {{ equipmentLabel(exercise.equipment) }}
                       </small>
                     </td>
@@ -96,7 +96,7 @@
     @if (loggingExercise(); as exercise) {
       <pz-card
         [title]="'Registrar progreso - ' + exercise.name"
-        subtitle="Peso, repeticiones y series de la sesion"
+        subtitle="Peso, repeticiones y series de la sesión"
       >
         <form [formGroup]="progressForm" class="pz-progress-form" (ngSubmit)="saveProgress()">
           <label class="pz-field">
@@ -121,7 +121,7 @@
 
           <label class="pz-field pz-progress-form__wide">
             <span>Notas</span>
-            <input type="text" formControlName="notes" maxlength="200" placeholder="Sensaciones, tecnica, incidencias" />
+            <input type="text" formControlName="notes" maxlength="200" placeholder="Sensaciones, técnica, incidencias" />
           </label>
 
           @if (progressError()) {
@@ -140,9 +140,9 @@
 
         @if (exerciseSummary(); as summary) {
           <p class="pz-detail__summary">
-            Historial: {{ summary.sessions }} sesiones ·
-            mejor carga {{ summary.maxWeightKg ?? '—' }} kg ·
-            ultima {{ summary.lastWeightKg ?? '—' }} kg
+            Historial: {{ summary.sessions }} sesiones &middot;
+            mejor carga {{ summary.maxWeightKg ?? '—' }} kg &middot;
+            última {{ summary.lastWeightKg ?? '—' }} kg
             ({{ summary.lastPerformedOn }})
           </p>
         } @else {

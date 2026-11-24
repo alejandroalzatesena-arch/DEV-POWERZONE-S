@@ -8,52 +8,8 @@ import { PzButton } from '../../../shared/ui/button/pz-button';
 @Component({
   selector: 'pz-forgot-password',
   imports: [ReactiveFormsModule, RouterLink, PzButton],
-  template: `
-    <section class="pz-auth-card">
-      <p class="pz-eyebrow">Recuperacion</p>
-      <h1>Restablece tu contrasena</h1>
-      <p>
-        Escribe el email de tu cuenta y te enviaremos un enlace para crear una nueva
-        contrasena.
-      </p>
-
-      @if (sent()) {
-        <p class="pz-alert pz-alert--success" role="status">
-          Si el email existe, enviamos las instrucciones. Revisa tu bandeja y la carpeta de
-          spam.
-        </p>
-      } @else {
-        <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-          <label class="pz-field">
-            <span>Email</span>
-            <input
-              type="email"
-              formControlName="email"
-              autocomplete="email"
-              placeholder="tu@correo.com"
-              [attr.aria-invalid]="invalid()"
-            />
-            @if (invalid()) {
-              <small class="pz-field__error">Ingresa un email valido.</small>
-            }
-          </label>
-
-          @if (errorMessage()) {
-            <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
-          }
-
-          <button pz-button type="submit" [disabled]="loading()">
-            {{ loading() ? 'Enviando...' : 'Enviar enlace' }}
-          </button>
-        </form>
-      }
-
-      <p class="pz-auth-card__alt">
-        <a routerLink="/auth/login">Volver al inicio de sesion</a>
-      </p>
-    </section>
-  `,
-  styleUrl: '../login/pz-auth-card.scss',
+  templateUrl: './pz-forgot-password.html',
+  styleUrls: ['../login/pz-auth-card.scss', '../pz-auth-forms.scss'],
 })
 export class PzForgotPassword {
   private readonly fb = inject(NonNullableFormBuilder);

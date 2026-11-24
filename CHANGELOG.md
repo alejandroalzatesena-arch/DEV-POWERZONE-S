@@ -4,6 +4,24 @@ Todas las entregas relevantes de PowerZone. El formato sigue
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 versionado por sprint.
 
+## [0.5.0] - 2026-12-12 - Sprint 4: Administracion y CI
+
+### Agregado
+
+- Rediseño visual de acceso, navegación, panel, rutinas, progreso, pagos y
+  componentes compartidos, con sistema documentado en `DESIGN.md` (PPP-466).
+- Colección y entorno de Postman para los módulos Auth, Users, Routines,
+  Progress, Billing y Webhook (PPP-467).
+- Navegación por rol, `roleGuard`, `isAdmin`/`isStaff` y etiquetas de rol
+  compartidas; `SUPER_ADMIN` queda equiparado a `ADMIN` en la UI (PPP-323).
+- Panel por rol: vista de miembro y vista de staff con usuarios y últimos pagos
+  leídos de la API (PPP-235).
+
+### Corregido
+
+- Autorización de `SUPER_ADMIN` en reglas de seguridad y controladores de
+  usuarios y rutinas (PPP-58).
+
 ## [0.4.0] - 2026-11-28 - Sprint 3: Pagos y membresias
 
 ### Agregado
@@ -92,7 +110,7 @@ versionado por sprint.
 - Login, refresh, logout y bloqueo temporal tras cinco intentos fallidos en
   quince minutos.
 - RBAC: perfil propio (`/users/me`), directorio para ADMIN y TRAINER y cambio
-  de rol exclusivo de ADMIN.
+  de rol exclusivo de ADMIN o SUPER_ADMIN.
 - Politica de sesiones: maximo cinco activas, opcion "Recordarme" de 30 dias y
   limpieza programada de credenciales vencidas.
 - Recuperacion de contrasena con token de un solo uso y revocacion de sesiones.

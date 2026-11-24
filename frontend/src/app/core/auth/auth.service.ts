@@ -29,7 +29,14 @@ export class AuthService {
   readonly user = this.currentUser.asReadonly();
   readonly status = this.statusSignal.asReadonly();
   readonly isAuthenticated = computed(() => this.statusSignal() === 'authenticated');
-  readonly isAdmin = computed(() => this.currentUser()?.role === 'ADMIN');
+  readonly isAdmin = computed(() => {
+    const role = this.currentUser()?.role;
+    return role === 'ADMIN' || role === 'SUPER_ADMIN';
+  });
+  readonly isStaff = computed(() => {
+    const role = this.currentUser()?.role;
+    return role === 'TRAINER' || role === 'ADMIN' || role === 'SUPER_ADMIN';
+  });
   readonly displayName = computed(() => {
     const user = this.currentUser();
     return user ? `${user.firstName} ${user.lastName}`.trim() : '';

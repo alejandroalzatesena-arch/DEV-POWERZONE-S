@@ -1,0 +1,105 @@
+<div class="pz-page pz-dashboard pz-staff">
+  <header class="pz-page__header pz-dashboard__header">
+    <div>
+      <p class="pz-eyebrow">Operación del gimnasio</p>
+      <h1>Panel de control, {{ greetingName() }}</h1>
+      <p>
+        Directorio de usuarios y movimientos recientes de facturación, tomados directamente de la API.
+      </p>
+    </div>
+    <div class="pz-dashboard__actions">
+      <a class="pz-dashboard__link" routerLink="/app/members">Ver miembros</a>
+      <a class="pz-dashboard__link" routerLink="/app/payments">Ver pagos</a>
+    </div>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <section class="pz-grid pz-dashboard__stats" aria-label="Indicadores del gimnasio">
+    @for (stat of stats(); track stat.label) {
+      <pz-card class="pz-stat-card">
+        <div class="pz-stat">
+          <span class="pz-muted">{{ stat.label }}</span>
+          <strong>{{ stat.value }}</strong>
+          <small>{{ stat.detail }}</small>
+        </div>
+      </pz-card>
+    }
+  </section>
+
+  <section class="pz-staff__columns">
+    <pz-card
+      title="Directorio de usuarios"
+      [subtitle]="users().length + ' usuario(s) en el gimnasio'"
+    >
+      @if (loading()) {
+        <p class="pz-muted">Cargando usuarios...</p>
+      } @else if (users().length === 0) {
+        <pz-empty-state
+          heading="Sin usuarios"
+          description="Todavía no hay usuarios registrados en este gimnasio."
+          mark="U"
+        />
+      } @else {
+        <div class="pz-table-wrap">
+          <table class="pz-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of users(); track user.id) {
+                <tr>
+                  <td>
+                    <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+                    <small class="pz-muted">{{ user.email }}</small>
+                  </td>
+                  <td><pz-badge tone="info">{{ roleLabels[user.role] }}</pz-badge></td>
+                  <td>
+                    <pz-badge [tone]="user.active ? 'success' : 'danger'">
+                      {{ user.active ? 'Activo' : 'Inactivo' }}
+                    </pz-badge>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </pz-card>
+
+    <pz-card title="Últimos pagos" subtitle="5 movimientos más recientes">
+      @if (loading()) {
+        <p class="pz-muted">Cargando pagos...</p>
+      } @else if (recentPayments().length === 0) {
+        <pz-empty-state
+          heading="Sin pagos recientes"
+          description="Los pagos registrados aparecerán aquí cuando existan."
+          mark="P"
+        />
+      } @else {
+        <ul class="pz-payments">
+          @for (payment of recentPayments(); track payment.id) {
+            <li>
+              <div class="pz-payments__main">
+                <strong>{{ payment.planName }}</strong>
+                <small class="pz-muted">{{ formatDateTime(payment.createdAt) }}</small>
+              </div>
+              <div class="pz-payments__meta">
+                <pz-badge [tone]="paymentTones[payment.status]">
+                  {{ paymentLabels[payment.status] }}
+                </pz-badge>
+                <span>{{ formatMoney(payment.amountCents, payment.currency) }}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+    </pz-card>
+  </section>
+</div>

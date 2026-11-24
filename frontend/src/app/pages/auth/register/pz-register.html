@@ -1,0 +1,116 @@
+<section class="pz-auth-card pz-auth-card--wide">
+  <div class="pz-auth-card__head">
+    <p class="pz-eyebrow">Nueva cuenta</p>
+    <h1>Crea tu perfil</h1>
+    <p>
+      Tu perfil alimenta la generación de rutinas: objetivo, experiencia y días disponibles
+      por semana.
+    </p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <fieldset class="pz-form-section">
+      <legend>Cuenta</legend>
+      <div class="pz-form-grid">
+        <label class="pz-field">
+          <span>Nombre</span>
+          <input type="text" formControlName="firstName" autocomplete="given-name" />
+          @if (invalid('firstName')) {
+            <small class="pz-field__error">El nombre es obligatorio.</small>
+          }
+        </label>
+        <label class="pz-field">
+          <span>Apellido</span>
+          <input type="text" formControlName="lastName" autocomplete="family-name" />
+          @if (invalid('lastName')) {
+            <small class="pz-field__error">El apellido es obligatorio.</small>
+          }
+        </label>
+      </div>
+
+      <label class="pz-field">
+        <span>Email</span>
+        <input type="email" formControlName="email" autocomplete="email" />
+        @if (invalid('email')) {
+          <small class="pz-field__error">Ingresa un email válido.</small>
+        }
+      </label>
+
+      <div class="pz-form-grid">
+        <label class="pz-field">
+          <span>Contraseña</span>
+          <input type="password" formControlName="password" autocomplete="new-password" />
+          @if (invalid('password')) {
+            <small class="pz-field__error">Mínimo 8 caracteres con letras y números.</small>
+          }
+        </label>
+        <label class="pz-field">
+          <span>Confirmar contraseña</span>
+          <input type="password" formControlName="confirmPassword" autocomplete="new-password" />
+          @if (form.hasError('passwordsMismatch') && submitted()) {
+            <small class="pz-field__error">Las contraseñas no coinciden.</small>
+          }
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="pz-form-section">
+      <legend>Perfil de entrenamiento</legend>
+      <div class="pz-form-grid">
+        <label class="pz-field">
+          <span>Teléfono (opcional)</span>
+          <input type="tel" formControlName="phone" autocomplete="tel" />
+        </label>
+        <label class="pz-field">
+          <span>Fecha de nacimiento (opcional)</span>
+          <input type="date" formControlName="birthDate" />
+        </label>
+        <label class="pz-field">
+          <span>Estatura en cm (opcional)</span>
+          <input type="number" formControlName="heightCm" min="50" max="250" />
+        </label>
+        <label class="pz-field">
+          <span>Peso en kg (opcional)</span>
+          <input type="number" formControlName="weightKg" min="20" max="300" step="0.1" />
+        </label>
+        <label class="pz-field">
+          <span>Objetivo</span>
+          <select formControlName="goal">
+            <option value="">Selecciona un objetivo</option>
+            @for (option of goalOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </label>
+        <label class="pz-field">
+          <span>Experiencia</span>
+          <select formControlName="experienceLevel">
+            <option value="">Selecciona tu nivel</option>
+            @for (option of levelOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        </label>
+      </div>
+
+      <label class="pz-field">
+        <span>Días de entrenamiento por semana</span>
+        <input type="number" formControlName="daysPerWeek" min="2" max="7" />
+        <small class="pz-field__hint">Entre 2 y 7 días.</small>
+      </label>
+    </fieldset>
+
+    @if (errorMessage()) {
+      <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+    }
+
+    <button pz-button type="submit" [disabled]="loading()">
+      {{ loading() ? 'Creando cuenta...' : 'Crear cuenta' }}
+    </button>
+  </form>
+
+  <p class="pz-auth-card__alt">
+    ¿Ya tienes cuenta?
+    <a routerLink="/auth/login">Iniciar sesión</a>
+  </p>
+</section>

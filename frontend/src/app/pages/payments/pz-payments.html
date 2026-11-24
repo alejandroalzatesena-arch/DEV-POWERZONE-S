@@ -1,23 +1,25 @@
-<div class="pz-page">
+<div class="pz-page pz-payments-page">
   <header class="pz-page__header">
     <div>
       <p class="pz-eyebrow">Pagos</p>
-      <h1>Mi membresia y mis pagos</h1>
+      <h1>Mi membresía y mis pagos</h1>
       <p>
         Consulta el estado de tu acceso, revisa tus transacciones y descarga el
         comprobante de cada pago completado.
       </p>
     </div>
-    <a class="pz-payments__link" routerLink="/app/plans">Comprar o renovar</a>
+    <a class="pz-payments__link" routerLink="/app/plans">
+      Comprar o renovar <span aria-hidden="true">&rarr;</span>
+    </a>
   </header>
 
   @if (errorMessage()) {
     <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
   }
 
-  <pz-membership-card />
+  <pz-membership-card class="pz-payments__membership" />
 
-  <pz-card title="Historial de pagos" [subtitle]="total() + ' transaccion(es) registradas'">
+  <pz-card title="Historial de pagos" [subtitle]="total() + ' transacción(es) registradas'">
     <form class="pz-payments__filter" [formGroup]="form" (ngSubmit)="applyFilter()">
       <label class="pz-field">
         <span>Desde</span>
@@ -46,8 +48,8 @@
       <p class="pz-muted">Cargando historial...</p>
     } @else if (payments().length === 0) {
       <pz-empty-state
-        heading="Aun no tienes pagos"
-        description="Cuando completes tu primera compra veras aqui el detalle y podras descargar el comprobante."
+        heading="Aún no tienes pagos"
+        description="Cuando completes tu primera compra verás aquí el detalle y podrás descargar el comprobante."
         mark="P"
       >
         <a class="pz-payments__link" routerLink="/app/plans">Ver planes</a>
@@ -59,7 +61,7 @@
             <tr>
               <th>Fecha</th>
               <th>Plan</th>
-              <th>Metodo</th>
+              <th>Método</th>
               <th>Monto</th>
               <th>Estado</th>
               <th>Comprobante</th>
@@ -123,7 +125,7 @@
             Anterior
           </button>
           <span class="pz-muted">
-            Pagina {{ pageIndex() + 1 }} de {{ totalPages() }}
+            Página {{ pageIndex() + 1 }} de {{ totalPages() }}
           </span>
           <button
             pz-button
