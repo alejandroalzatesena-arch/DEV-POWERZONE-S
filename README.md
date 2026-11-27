@@ -53,8 +53,9 @@ mvn spring-boot:run
 ```
 
 Variables principales: `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`,
-`DB_PASSWORD`, `JWT_SECRET`, `CORS_ORIGINS`. El detalle esta en
-`.env.example` y en `backend/src/main/resources/application.yml`.
+`DB_PASSWORD`, `JWT_SECRET`, `CORS_ORIGINS`, `PAYMENTS_WEBHOOK_SECRET` y
+`STRIPE_SECRET_KEY`. El detalle esta en `.env.example`,
+`backend/src/main/resources/application.yml` y `docs/PAYMENTS.md`.
 
 ### Frontend por separado
 
@@ -101,22 +102,38 @@ Ver `docs/BRANCHING.md` y `docs/COMMITS.md` para el detalle del proceso.
 |---|---|
 | `docs/ARCHITECTURE.md` | Vision, modulos, multi-tenant y decisiones |
 | `docs/DATA-MODEL.md` | Tablas y reglas de persistencia |
+| `docs/PAYMENTS.md` | Contrato de pagos, pasarela, membresias y PCI-DSS |
 | `docs/SPRINT-MAPPING.md` | Alcance y estado de cada sprint |
 | `docs/BRANCHING.md` | Ramas, PR, releases y protecciones |
 | `docs/COMMITS.md` | Convencion de mensajes y trazabilidad |
 
 ## Estado del proyecto
 
-Entrega acumulada hasta el **Sprint 2** (en curso al 4 de noviembre de 2026):
+Entrega acumulada hasta el **Sprint 3** (cerrado al 28 de noviembre de 2026):
 
 | Sprint | Fechas | Estado |
 |---|---|---|
 | 0 - Foundation | 05 - 17 oct 2026 | Cerrado |
 | 1 - Autenticacion y usuarios | 19 - 31 oct 2026 | Cerrado |
-| 2 - Rutinas | 02 - 14 nov 2026 | En curso (alcance entregado) |
+| 2 - Rutinas | 02 - 14 nov 2026 | Cerrado |
+| 3 - Pagos y membresias | 16 - 28 nov 2026 | Cerrado |
 
-Los sprints 3 a 12 estan planificados en Jira y se implementan en las
+Los sprints 4 a 12 estan planificados en Jira y se implementan en las
 siguientes sesiones de trabajo.
+
+### Modulo de pagos
+
+- Pasarela simulada (`SandboxPaymentGateway`) con checkout alojado y webhook
+  firmado con HMAC-SHA256 para desarrollo y demostracion.
+- `StripePaymentGateway` se activa automaticamente al definir
+  `STRIPE_SECRET_KEY`; el resto de la aplicacion no cambia.
+- Planes, metodos de pago, historial paginado, estado de membresia y
+  comprobante PDF (OpenPDF).
+- Idempotencia por `payment_events.event_id` y activacion de membresia en la
+  misma transaccion del webhook.
+- Variables nuevas: `PAYMENTS_WEBHOOK_SECRET`, `PAYMENTS_CHECKOUT_MINUTES`,
+  `PAYMENTS_MAX_ATTEMPTS`, `PAYMENTS_EXPIRING_DAYS`, `PAYMENTS_CHECKOUT_LIMIT`.
+  El detalle esta en `docs/PAYMENTS.md`.
 
 ## Equipo
 
