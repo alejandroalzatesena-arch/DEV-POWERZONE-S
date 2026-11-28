@@ -4,6 +4,48 @@ Todas las entregas relevantes de PowerZone. El formato sigue
 [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y el proyecto usa
 versionado por sprint.
 
+## [0.4.0] - 2026-11-28 - Sprint 3: Pagos y membresias
+
+### Agregado
+
+- Migracion `V3__payments_and_memberships.sql` con planes, metodos de pago,
+  pagos, bitacora de eventos, membresias y comprobantes.
+- Semillas de tres planes (`MENSUAL`, `TRIMESTRAL`, `ANUAL`) y cuatro metodos
+  (`CARD_CREDIT`, `CARD_DEBIT`, `PSE`, `NEQUI`) para el gimnasio semilla.
+- Puerto `PaymentGateway` con dos implementaciones: `SandboxPaymentGateway`
+  (checkout alojado simulado y webhook HMAC-SHA256) y `StripePaymentGateway`
+  (se activa solo al configurar `STRIPE_SECRET_KEY`).
+- API de pagos: planes, metodos, checkout, historial paginado con filtros,
+  detalle, estado de membresia y comprobante PDF.
+- Webhook idempotente con firma HMAC, ventana de tolerancia de cinco minutos y
+  bitacora `payment_events`; activacion de membresia y comprobante en una sola
+  transaccion.
+- Job de expiracion que marca `EXPIRED` los pagos `PENDING` vencidos.
+- Rate limit de checkout por usuario e intentos maximos por plan y ventana.
+- Comprobante informativo en PDF con OpenPDF y numeracion por secuencia.
+- Frontend: `/app/plans` para elegir plan y metodo, `/app/checkout/:paymentId`
+  con panel de pruebas y `/app/payments` con historial, filtros y descarga.
+- Tarjeta `pz-membership-card` con estado, dias restantes y acceso a renovar,
+  integrada al panel y al historial.
+- Servicios, modelos y helpers `core/billing` y `ApiService.download()`.
+- 85 pruebas nuevas de backend (143 en total) y 48 de frontend (83 en total).
+
+### Cambiado
+
+- El webhook queda publico en la cadena de seguridad pero autenticado por firma.
+- Se expone `Content-Disposition` en CORS para que el navegador lea el nombre del
+  comprobante.
+- La navegacion del panel incorpora Planes y Pagos, y el dashboard muestra la
+  membresia vigente.
+
+### Notas
+
+- La pasarela simulada es la opcion por defecto; no se requiere ninguna llave
+  externa para recorrer el flujo completo de compra.
+- Ningun dato de tarjeta pasa por la aplicacion: el formulario vive en la
+  pasarela alojada (ver `docs/PAYMENTS.md`).
+- Los montos se manejan en centavos y el frontend los presenta en COP.
+
 ## [0.3.0] - 2026-11-14 - Sprint 2: Rutinas y progreso
 
 ### Agregado
