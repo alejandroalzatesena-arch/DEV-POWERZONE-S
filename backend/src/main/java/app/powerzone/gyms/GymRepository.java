@@ -32,4 +32,9 @@ public class GymRepository {
                 "SELECT COUNT(*) FROM gyms WHERE id = ? AND active = TRUE", Integer.class, gymId);
         return count != null && count > 0;
     }
+
+    public java.util.Optional<String> findName(long gymId) {
+        return jdbc.query("SELECT name FROM gyms WHERE id = ?",
+                (rs, rowNum) -> rs.getString("name"), gymId).stream().findFirst();
+    }
 }

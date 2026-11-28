@@ -5,7 +5,7 @@
   padding: var(--pz-space-6);
   border: 1px solid var(--pz-border);
   border-radius: var(--pz-radius-lg);
-  background: rgba(18, 25, 38, 0.82);
+  background: rgba(27, 23, 20, 0.85);
   box-shadow: var(--pz-shadow);
 }
 
@@ -105,17 +105,17 @@
 .pz-alert {
   padding: 0.65rem 0.8rem;
   border-radius: var(--pz-radius-sm);
-  border: 1px solid rgba(255, 92, 122, 0.42);
+  border: 1px solid rgba(255, 77, 109, 0.42);
   background: var(--pz-danger-soft);
-  color: #ffb3c1;
+  color: #ffc2cc;
   font-size: 0.82rem;
   line-height: 1.45;
 }
 
 .pz-alert--success {
-  border-color: rgba(46, 230, 168, 0.42);
-  background: var(--pz-primary-soft);
-  color: var(--pz-primary);
+  border-color: rgba(61, 214, 140, 0.42);
+  background: var(--pz-success-soft);
+  color: var(--pz-success);
 }
 
 .pz-auth-card button[type='submit'] {

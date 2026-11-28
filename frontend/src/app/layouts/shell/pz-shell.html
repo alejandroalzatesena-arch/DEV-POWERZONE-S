@@ -1,7 +1,9 @@
 <div class="pz-shell">
   <aside class="pz-shell__sidebar">
     <a class="pz-brand" routerLink="/app/dashboard" aria-label="PowerZone, ir al panel">
-      <span class="pz-brand__mark">PZ</span>
+      <span class="pz-brand__tile">
+        <img src="brand/powerzone-mark.webp" alt="" width="167" height="128" />
+      </span>
       <span class="pz-brand__name">Power<span>Zone</span></span>
     </a>
 
@@ -13,7 +15,7 @@
           routerLinkActive="is-active"
           [routerLinkActiveOptions]="{ exact: item.exact }"
         >
-          <span class="pz-nav__dot" aria-hidden="true"></span>
+          <pz-icon [name]="item.icon" />
           <span class="pz-nav__label">
             {{ item.label }}
             <small>{{ item.hint }}</small>
@@ -23,8 +25,7 @@
     </nav>
 
     <div class="pz-shell__footer">
-      <pz-badge tone="success">Sprint 2</pz-badge>
-      <p class="pz-muted">Rutinas &amp; progreso</p>
+      <p class="pz-muted">PowerZone &middot; Gestion de gimnasios</p>
     </div>
   </aside>
 

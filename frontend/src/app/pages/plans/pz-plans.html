@@ -1,0 +1,117 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Membresia</p>
+      <h1>Activa o renueva tu acceso</h1>
+      <p>
+        Elige un plan y un metodo de pago. El cobro se realiza en la pasarela segura:
+        PowerZone nunca almacena los datos de tu tarjeta.
+      </p>
+    </div>
+    <a class="pz-plans__link" routerLink="/app/payments">Ver mi historial</a>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p class="pz-muted">Cargando planes y metodos de pago...</p>
+  } @else if (plans().length === 0) {
+    <pz-empty-state
+      heading="Sin planes disponibles"
+      description="El gimnasio aun no publico planes de membresia. Contacta a la administracion."
+      mark="P"
+    />
+  } @else {
+    <section class="pz-plans" aria-label="Planes de membresia disponibles">
+      @for (plan of plans(); track plan.id) {
+        <button
+          type="button"
+          class="pz-plan-option"
+          [class.is-selected]="selectedPlanId() === plan.id"
+          [attr.aria-pressed]="selectedPlanId() === plan.id"
+          (click)="selectPlan(plan)"
+        >
+          <span class="pz-plan-option__top">
+            <span class="pz-plan-option__name">{{ plan.name }}</span>
+            @if (selectedPlanId() === plan.id) {
+              <pz-badge tone="success">Seleccionado</pz-badge>
+            }
+          </span>
+          <span class="pz-plan-option__price">{{ money(plan.priceCents, plan.currency) }}</span>
+          <span class="pz-plan-option__duration">{{ durationLabel(plan.durationDays) }}</span>
+          @if (plan.description) {
+            <span class="pz-plan-option__desc">{{ plan.description }}</span>
+          }
+        </button>
+      }
+    </section>
+
+    <pz-card title="Metodo de pago" subtitle="Elige como quieres pagar">
+      @if (methods().length === 0) {
+        <p class="pz-muted">No hay metodos de pago habilitados para tu gimnasio.</p>
+      } @else {
+        <div class="pz-methods" role="radiogroup" aria-label="Metodo de pago">
+          @for (method of methods(); track method.code) {
+            <label class="pz-method-option" [class.is-selected]="selectedMethodCode() === method.code">
+              <input
+                type="radio"
+                name="methodCode"
+                [value]="method.code"
+                [checked]="selectedMethodCode() === method.code"
+                (change)="selectMethod(method.code)"
+              />
+              <span class="pz-method-option__body">
+                <strong>{{ method.label }}</strong>
+                <small>
+                  {{ kindLabels[method.kind] }} &middot;
+                  {{ method.immediate ? 'Confirmacion inmediata' : 'Confirmacion diferida' }}
+                </small>
+              </span>
+            </label>
+          }
+        </div>
+      }
+    </pz-card>
+
+    <pz-card title="Resumen del pago" subtitle="Verifica los datos antes de continuar">
+      @if (selectedPlan(); as plan) {
+        <dl class="pz-summary">
+          <div class="pz-summary__row">
+            <dt>Plan</dt>
+            <dd>{{ plan.name }}</dd>
+          </div>
+          <div class="pz-summary__row">
+            <dt>Duracion</dt>
+            <dd>{{ durationLabel(plan.durationDays) }}</dd>
+          </div>
+          <div class="pz-summary__row">
+            <dt>Metodo</dt>
+            <dd>{{ selectedMethod()?.label || 'Selecciona un metodo' }}</dd>
+          </div>
+          <div class="pz-summary__row pz-summary__total">
+            <dt>Total a pagar</dt>
+            <dd>{{ money(plan.priceCents, plan.currency) }}</dd>
+          </div>
+        </dl>
+      }
+
+      <p class="pz-plans__note">
+        Al continuar se abrira el checkout seguro de la pasarela. Si el pago se rechaza
+        podras reintentarlo sin volver a elegir el plan.
+      </p>
+
+      <div class="pz-plans__actions">
+        <button
+          pz-button
+          type="button"
+          [disabled]="!canPay() || submitting()"
+          (click)="checkout()"
+        >
+          {{ submitting() ? 'Abriendo checkout...' : 'Continuar al pago' }}
+        </button>
+      </div>
+    </pz-card>
+  }
+</div>

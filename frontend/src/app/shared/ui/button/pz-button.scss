@@ -7,7 +7,7 @@
   border: 1px solid transparent;
   border-radius: var(--pz-radius-sm);
   background: var(--pz-primary);
-  color: #06251b;
+  color: #1a120b;
   font-weight: 600;
   font-size: 0.9rem;
   line-height: 1;
@@ -48,7 +48,7 @@
 }
 
 :host.pz-button--danger:hover {
-  background: #ff7891;
+  background: #ff7189;
 }
 
 :host.pz-button--sm {

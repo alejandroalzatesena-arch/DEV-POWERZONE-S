@@ -81,7 +81,7 @@ public class AuthService {
                         "USER_NOT_FOUND", "No se encontro el usuario recien creado."));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public SessionResult login(LoginRequest request) {
         String email = normalizeEmail(request.email());
         loginAttemptService.assertNotLocked(email);

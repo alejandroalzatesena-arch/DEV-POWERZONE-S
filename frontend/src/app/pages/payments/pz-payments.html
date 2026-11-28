@@ -1,0 +1,142 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Pagos</p>
+      <h1>Mi membresia y mis pagos</h1>
+      <p>
+        Consulta el estado de tu acceso, revisa tus transacciones y descarga el
+        comprobante de cada pago completado.
+      </p>
+    </div>
+    <a class="pz-payments__link" routerLink="/app/plans">Comprar o renovar</a>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <pz-membership-card />
+
+  <pz-card title="Historial de pagos" [subtitle]="total() + ' transaccion(es) registradas'">
+    <form class="pz-payments__filter" [formGroup]="form" (ngSubmit)="applyFilter()">
+      <label class="pz-field">
+        <span>Desde</span>
+        <input type="date" formControlName="from" />
+      </label>
+      <label class="pz-field">
+        <span>Hasta</span>
+        <input type="date" formControlName="to" />
+      </label>
+      <label class="pz-field">
+        <span>Estado</span>
+        <select formControlName="status">
+          <option value="">Todos los estados</option>
+          @for (status of statusOptions; track status) {
+            <option [value]="status">{{ statusLabels[status] }}</option>
+          }
+        </select>
+      </label>
+      <div class="pz-payments__filter-actions">
+        <button type="button" class="pz-link" (click)="clearFilter()">Limpiar</button>
+        <button type="submit" class="pz-button-inline">Aplicar filtros</button>
+      </div>
+    </form>
+
+    @if (loading()) {
+      <p class="pz-muted">Cargando historial...</p>
+    } @else if (payments().length === 0) {
+      <pz-empty-state
+        heading="Aun no tienes pagos"
+        description="Cuando completes tu primera compra veras aqui el detalle y podras descargar el comprobante."
+        mark="P"
+      >
+        <a class="pz-payments__link" routerLink="/app/plans">Ver planes</a>
+      </pz-empty-state>
+    } @else {
+      <div class="pz-table-wrap">
+        <table class="pz-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Plan</th>
+              <th>Metodo</th>
+              <th>Monto</th>
+              <th>Estado</th>
+              <th>Comprobante</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (payment of payments(); track payment.id) {
+              <tr>
+                <td class="pz-mono pz-payments__date">{{ dateTime(payment.createdAt) }}</td>
+                <td>
+                  <strong>{{ payment.planName }}</strong>
+                  <small class="pz-muted pz-payments__reference">{{ payment.reference }}</small>
+                </td>
+                <td>{{ payment.methodLabel }}</td>
+                <td class="pz-mono pz-payments__amount">
+                  {{ money(payment.amountCents, payment.currency) }}
+                </td>
+                <td>
+                  <pz-badge [tone]="statusTones[payment.status]">
+                    {{ statusLabels[payment.status] }}
+                  </pz-badge>
+                  @if (payment.failureMessage) {
+                    <small class="pz-payments__failure">{{ payment.failureMessage }}</small>
+                  }
+                </td>
+                <td>
+                  <div class="pz-payments__actions">
+                    <a class="pz-payments__link" [routerLink]="['/app/checkout', payment.id]">
+                      Detalle
+                    </a>
+                    @if (payment.status === 'COMPLETED') {
+                      <button
+                        pz-button
+                        variant="ghost"
+                        size="sm"
+                        type="button"
+                        [disabled]="downloading() !== null"
+                        (click)="downloadReceipt(payment)"
+                      >
+                        {{ downloading() === payment.id ? 'Generando...' : 'Descargar PDF' }}
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      @if (totalPages() > 1) {
+        <div class="pz-payments__pager">
+          <button
+            pz-button
+            variant="ghost"
+            size="sm"
+            type="button"
+            [disabled]="!hasPrevious()"
+            (click)="previousPage()"
+          >
+            Anterior
+          </button>
+          <span class="pz-muted">
+            Pagina {{ pageIndex() + 1 }} de {{ totalPages() }}
+          </span>
+          <button
+            pz-button
+            variant="ghost"
+            size="sm"
+            type="button"
+            [disabled]="!hasNext()"
+            (click)="nextPage()"
+          >
+            Siguiente
+          </button>
+        </div>
+      }
+    }
+  </pz-card>
+</div>

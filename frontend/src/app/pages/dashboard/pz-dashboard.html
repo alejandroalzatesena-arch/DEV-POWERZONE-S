@@ -1,0 +1,124 @@
+<div class="pz-page">
+  <header class="pz-page__header">
+    <div>
+      <p class="pz-eyebrow">Panel</p>
+      <h1>Hola, {{ greetingName() }}</h1>
+      <p>
+        Este es el estado de tu entrenamiento. Genera tu plan, registra tus cargas y revisa
+        como evolucionas semana a semana.
+      </p>
+    </div>
+    <div class="pz-dashboard__actions">
+      <a class="pz-dashboard__link" routerLink="/app/progress">Ver progreso</a>
+      <button pz-button type="button" (click)="goToRoutines()">Generar rutina</button>
+    </div>
+  </header>
+
+  @if (errorMessage()) {
+    <p class="pz-alert" role="alert">{{ errorMessage() }}</p>
+  }
+
+  <section class="pz-grid" aria-label="Indicadores del entrenamiento">
+    @for (stat of stats(); track stat.label) {
+      <pz-card>
+        <div class="pz-stat">
+          <span class="pz-muted">{{ stat.label }}</span>
+          <strong>{{ stat.value }}</strong>
+          <small>{{ stat.detail }}</small>
+        </div>
+      </pz-card>
+    }
+  </section>
+
+  <pz-membership-card />
+
+  <section class="pz-dashboard__columns">
+    <pz-card
+      title="Tu plan activo"
+      [subtitle]="activeRoutines().length + ' rutina(s) activa(s)'"
+    >
+      <a card-action class="pz-dashboard__link" routerLink="/app/routines">Ver todas</a>
+
+      @if (loading()) {
+        <p class="pz-muted">Cargando tu plan...</p>
+      } @else if (activeRoutine(); as routine) {
+        <div class="pz-plan">
+          <div class="pz-plan__head">
+            <div>
+              <h4>{{ routine.name }}</h4>
+              <div class="pz-plan__meta">
+                <pz-badge tone="info">{{ goalLabels[routine.goal] }}</pz-badge>
+                <pz-badge>{{ experienceLabels[routine.experienceLevel] }}</pz-badge>
+                <pz-badge tone="success">{{ routine.daysPerWeek }} dias / semana</pz-badge>
+              </div>
+            </div>
+            <a class="pz-dashboard__link" [routerLink]="['/app/routines', routine.id]">
+              Abrir rutina
+            </a>
+          </div>
+
+          @if (nextDay(); as day) {
+            <div class="pz-plan__next">
+              <p class="pz-eyebrow">Proxima sesion</p>
+              <strong>{{ day.name }}</strong>
+              <span class="pz-muted">{{ day.focus }} &middot; {{ day.exercises.length }} ejercicios</span>
+            </div>
+          } @else if (loadingDetail()) {
+            <p class="pz-muted">Cargando los dias de tu plan...</p>
+          }
+
+          @if (routineDetail(); as detail) {
+            <ul class="pz-plan__days">
+              @for (day of detail.days; track day.id) {
+                <li>
+                  <span class="pz-plan__day-number">{{ day.dayNumber }}</span>
+                  <span class="pz-plan__day-name">{{ day.name }}</span>
+                  <span class="pz-muted">{{ day.exercises.length }} ej.</span>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      } @else {
+        <pz-empty-state
+          heading="Aun no tienes un plan"
+          description="Genera tu primera rutina a partir de tu objetivo, experiencia y dias disponibles."
+          mark="R"
+        >
+          <button pz-button type="button" (click)="goToRoutines()">Generar rutina</button>
+        </pz-empty-state>
+      }
+    </pz-card>
+
+    <pz-card title="Ultimos registros" subtitle="Cargas recientes">
+      <a card-action class="pz-dashboard__link" routerLink="/app/progress">Historial</a>
+
+      @if (loading()) {
+        <p class="pz-muted">Cargando registros...</p>
+      } @else if (recentEntries().length === 0) {
+        <pz-empty-state
+          heading="Sin registros"
+          description="Registra tus cargas desde la sesion diaria de tu rutina para ver tu evolucion aqui."
+          mark="P"
+        />
+      } @else {
+        <ul class="pz-entries">
+          @for (entry of recentEntries(); track entry.id) {
+            <li>
+              <div class="pz-entries__main">
+                <strong>{{ entry.exerciseName }}</strong>
+                <small class="pz-muted">{{ entry.performedOn }}</small>
+              </div>
+              <span class="pz-entries__load">
+                {{ entry.weightKg ?? '—' }} kg
+                @if (entry.reps) {
+                  <small>&times; {{ entry.reps }}</small>
+                }
+              </span>
+            </li>
+          }
+        </ul>
+      }
+    </pz-card>
+  </section>
+</div>

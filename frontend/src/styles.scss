@@ -1,24 +1,30 @@
 :root {
-  --pz-bg: #0b0f14;
-  --pz-surface: #121926;
-  --pz-surface-alt: #182131;
-  --pz-border: #243044;
-  --pz-text: #e8eef7;
-  --pz-muted: #8fa3bd;
-  --pz-primary: #2ee6a8;
-  --pz-primary-dark: #1bbd87;
-  --pz-primary-soft: rgba(46, 230, 168, 0.12);
-  --pz-danger: #ff5c7a;
-  --pz-danger-soft: rgba(255, 92, 122, 0.12);
+  /* Paleta calida derivada del logo (rojo #D03030 sobre carbon). */
+  --pz-bg: #12100d;
+  --pz-surface: #1b1714;
+  --pz-surface-alt: #241e19;
+  --pz-border: #3a2e26;
+  --pz-text: #f7f0e7;
+  --pz-muted: #b8a899;
+  --pz-primary: #ff7a2f;
+  --pz-primary-dark: #e05f13;
+  --pz-primary-soft: rgba(255, 122, 47, 0.14);
+  --pz-brand: #d03030;
+  --pz-brand-soft: rgba(208, 48, 48, 0.16);
+  --pz-cream: #f7efe6;
+  --pz-danger: #ff4d6d;
+  --pz-danger-soft: rgba(255, 77, 109, 0.14);
   --pz-warning: #ffb020;
-  --pz-warning-soft: rgba(255, 176, 32, 0.12);
-  --pz-info: #5aa9ff;
-  --pz-info-soft: rgba(90, 169, 255, 0.12);
+  --pz-warning-soft: rgba(255, 176, 32, 0.14);
+  --pz-success: #3dd68c;
+  --pz-success-soft: rgba(61, 214, 140, 0.14);
+  --pz-info: #7fa8ff;
+  --pz-info-soft: rgba(127, 168, 255, 0.14);
   --pz-radius-sm: 8px;
   --pz-radius: 14px;
   --pz-radius-lg: 22px;
-  --pz-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-  --pz-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.22);
+  --pz-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  --pz-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.3);
   --pz-space-1: 0.25rem;
   --pz-space-2: 0.5rem;
   --pz-space-3: 0.75rem;
@@ -41,8 +47,8 @@ body {
   padding: 0;
   min-height: 100%;
   background:
-    radial-gradient(circle at 12% -10%, rgba(46, 230, 168, 0.09), transparent 42%),
-    radial-gradient(circle at 92% 0%, rgba(90, 169, 255, 0.07), transparent 38%),
+    radial-gradient(circle at 10% -12%, rgba(255, 122, 47, 0.12), transparent 46%),
+    radial-gradient(circle at 94% -4%, rgba(208, 48, 48, 0.1), transparent 40%),
     var(--pz-bg);
   color: var(--pz-text);
   font-family: var(--pz-font);

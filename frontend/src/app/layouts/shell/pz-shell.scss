@@ -15,7 +15,9 @@
   gap: var(--pz-space-5);
   padding: var(--pz-space-5) var(--pz-space-4);
   border-right: 1px solid var(--pz-border);
-  background: linear-gradient(180deg, rgba(18, 25, 38, 0.92), rgba(11, 15, 20, 0.92));
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 122, 47, 0.08), transparent 45%),
+    linear-gradient(180deg, rgba(27, 23, 20, 0.94), rgba(18, 16, 13, 0.96));
   position: sticky;
   top: 0;
   height: 100vh;
@@ -24,22 +26,27 @@
 .pz-brand {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.7rem;
   padding: 0.25rem 0.5rem;
   color: var(--pz-text);
 }
 
-.pz-brand__mark {
+.pz-brand__tile {
   display: grid;
   place-items: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 11px;
-  background: var(--pz-primary);
-  color: #06251b;
-  font-weight: 800;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0.35rem;
+  border-radius: 12px;
+  background: var(--pz-cream);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.pz-brand__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .pz-brand__name {
@@ -77,22 +84,16 @@
 
 .pz-nav__item.is-active {
   background: var(--pz-primary-soft);
-  border-color: rgba(46, 230, 168, 0.24);
+  border-color: rgba(255, 122, 47, 0.3);
   color: var(--pz-primary);
 }
 
-.pz-nav__dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.5;
-  flex: none;
+.pz-nav__item pz-icon {
+  opacity: 0.85;
 }
 
-.pz-nav__item.is-active .pz-nav__dot {
+.pz-nav__item.is-active pz-icon {
   opacity: 1;
-  box-shadow: 0 0 0 4px rgba(46, 230, 168, 0.12);
 }
 
 .pz-nav__label {
@@ -131,7 +132,7 @@
   gap: var(--pz-space-3);
   padding: var(--pz-space-4) var(--pz-space-6);
   border-bottom: 1px solid var(--pz-border);
-  background: rgba(11, 15, 20, 0.7);
+  background: rgba(18, 16, 13, 0.72);
   backdrop-filter: blur(8px);
   position: sticky;
   top: 0;
@@ -178,7 +179,7 @@
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--pz-surface-alt);
+  background: var(--pz-primary-soft);
   color: var(--pz-primary);
   font-size: 0.7rem;
   font-weight: 700;
@@ -206,12 +207,13 @@
 
 @media (max-width: 900px) {
   .pz-shell {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .pz-shell__sidebar {
     position: static;
     height: auto;
+    min-width: 0;
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
@@ -223,9 +225,13 @@
     display: flex;
     overflow-x: auto;
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-bottom: 0.15rem;
   }
 
   .pz-nav__item {
+    flex: none;
     white-space: nowrap;
   }
 

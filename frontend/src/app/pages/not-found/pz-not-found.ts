@@ -10,7 +10,7 @@ import { PzButton } from '../../shared/ui/button/pz-button';
       <p class="pz-eyebrow">Error 404</p>
       <h1>Esta pagina no existe</h1>
       <p class="pz-muted">
-        La ruta solicitada no forma parte de PowerZone o fue movida durante un sprint.
+        La ruta solicitada no forma parte de PowerZone o fue movida de lugar.
       </p>
       <a routerLink="/app/dashboard">
         <button pz-button type="button">Volver al panel</button>

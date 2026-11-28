@@ -59,3 +59,12 @@ powerzone:
   stripe:
     secret-key: ${STRIPE_SECRET_KEY:}
     webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+  payments:
+    # Firma de la pasarela simulada. En produccion se usa el secreto de Stripe.
+    webhook-secret: ${PAYMENTS_WEBHOOK_SECRET:powerzone-sandbox-secret}
+    checkout-minutes: ${PAYMENTS_CHECKOUT_MINUTES:30}
+    retry-window-hours: ${PAYMENTS_RETRY_WINDOW_HOURS:24}
+    max-attempts: ${PAYMENTS_MAX_ATTEMPTS:3}
+    expiring-days: ${PAYMENTS_EXPIRING_DAYS:7}
+    checkout-limit: ${PAYMENTS_CHECKOUT_LIMIT:5}
+    expiry-scan-ms: ${PAYMENTS_EXPIRY_SCAN_MS:60000}

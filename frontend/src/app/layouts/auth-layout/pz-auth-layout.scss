@@ -16,37 +16,26 @@
   padding: var(--pz-space-7) var(--pz-space-6);
   border-right: 1px solid var(--pz-border);
   background:
-    radial-gradient(circle at 20% 10%, rgba(46, 230, 168, 0.14), transparent 45%),
-    linear-gradient(160deg, #101826, #0b0f14 70%);
+    radial-gradient(circle at 18% 8%, rgba(255, 122, 47, 0.16), transparent 46%),
+    radial-gradient(circle at 85% 90%, rgba(208, 48, 48, 0.12), transparent 42%),
+    linear-gradient(160deg, #1d1712, #12100d 70%);
 }
 
 .pz-brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
   color: var(--pz-text);
   width: fit-content;
+  padding: 0.9rem 1.15rem;
+  border-radius: var(--pz-radius);
+  background: var(--pz-cream);
+  box-shadow: var(--pz-shadow);
 }
 
-.pz-brand__mark {
-  display: grid;
-  place-items: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 11px;
-  background: var(--pz-primary);
-  color: #06251b;
-  font-weight: 800;
-  font-size: 0.85rem;
-}
-
-.pz-brand__name {
-  font-weight: 700;
-  font-size: 1.06rem;
-}
-
-.pz-brand__name span {
-  color: var(--pz-primary);
+.pz-brand__logo {
+  display: block;
+  width: clamp(9rem, 16vw, 13rem);
+  height: auto;
 }
 
 .pz-auth__pitch {
